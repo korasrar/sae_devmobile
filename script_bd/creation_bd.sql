@@ -1,51 +1,62 @@
-create table PAYS(
-    id_pays int,
-    nom_pays varchar(25),
-    primary key(id_pays)
-)
-
-create table VILLE(
-    id_ville int,
-    nom_ville varchar(25),
-    id_pays int ,
-    primary key(id_pays)
-)
-
-
-create table AEROPORT(
-    id_aeroport int,
-    nom_aeroport varchar(25) unique,
-    id_ville int,
-    primary key (id_aeroport)
-)
-
-create table COMPAGNIE(
-    id_compagnie int,
-    nom varchar(20),
-    id_pays varchar(25),
-    primary key(id_compagnie)
+CREATE TABLE PAYS (
+    id_pays INT,
+    nom_pays VARCHAR2(25),
+    CONSTRAINT pk_pays PRIMARY KEY (id_pays)
 );
 
-
-create table VOL(
-    num_vol int,
-    id_compagnie int,
-    date_depart date,
-    date_arrive date,
-
-    id_aeroport_depart int ,
-    terminal_depart int,
-
-    id_aeroport_arrive int,
-    terminal_arrive int,
-
-    primary key(num_vol, id_compagnie, date_depart)
+CREATE TABLE VILLE (
+    id_ville INT,
+    nom_ville VARCHAR2(25),
+    id_pays INT,
+    CONSTRAINT pk_ville PRIMARY KEY (id_ville)
 );
 
-alter table AEROPORT add foreign key(id_ville) references VILLE(id_ville);
-alter table VILLE add foreign key(id_pays) references PAYS(id_pays);
-alter table COMPAGNIE add foreign key(id_pays) references PAYS(id_pays);
+CREATE TABLE AEROPORT (
+    id_aeroport INT,
+    nom_aeroport VARCHAR2(25) UNIQUE,
+    id_ville INT,
+    CONSTRAINT pk_aeroport PRIMARY KEY (id_aeroport)
+);
 
-alter table VOL add foreign key(id_compagnie) references COMPAGNIE(id_compagnie);
-alter table VOL add foreign key(id_aeroport_depart) references AEROPORT(id_aeroport);
-alter table VOL add foreign key(id_aeroport_arrive) references AEROPORT(id_aeroport);
+CREATE TABLE COMPAGNIE (
+    id_compagnie INT,
+    nom VARCHAR2(20),
+    id_pays INT,
+    CONSTRAINT pk_compagnie PRIMARY KEY (id_compagnie)
+);
+
+CREATE TABLE VOL (
+    num_vol INT,
+    id_compagnie INT,
+    date_depart DATE,
+    date_arrive DATE,
+    id_aeroport_depart INT,
+    terminal_depart INT,
+    id_aeroport_arrive INT,
+    terminal_arrive INT,
+    CONSTRAINT pk_vol PRIMARY KEY (num_vol, id_compagnie, date_depart)
+);
+
+ALTER TABLE AEROPORT
+ADD CONSTRAINT fk_aeroport_ville
+FOREIGN KEY (id_ville) REFERENCES VILLE(id_ville);
+
+ALTER TABLE VILLE
+ADD CONSTRAINT fk_ville_pays
+FOREIGN KEY (id_pays) REFERENCES PAYS(id_pays);
+
+ALTER TABLE COMPAGNIE
+ADD CONSTRAINT fk_compagnie_pays
+FOREIGN KEY (id_pays) REFERENCES PAYS(id_pays);
+
+ALTER TABLE VOL
+ADD CONSTRAINT fk_vol_compagnie
+FOREIGN KEY (id_compagnie) REFERENCES COMPAGNIE(id_compagnie);
+
+ALTER TABLE VOL
+ADD CONSTRAINT fk_vol_aeroport_depart
+FOREIGN KEY (id_aeroport_depart) REFERENCES AEROPORT(id_aeroport);
+
+ALTER TABLE VOL
+ADD CONSTRAINT fk_vol_aeroport_arrive
+FOREIGN KEY (id_aeroport_arrive) REFERENCES AEROPORT(id_aeroport);
