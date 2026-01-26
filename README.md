@@ -11,3 +11,7 @@
   - #id_ville -> #id_pays
   - #id_aeroport_depart -> #id_ville
   - #id_aeroport_arrivee -> #id_ville
+
+## MCD  
+
+![MCD](images/mcd_modele_relationnel.png)
