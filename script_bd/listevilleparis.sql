@@ -59,30 +59,41 @@ Veuillez fournir la liste des villes accessibles depuis Paris,
 en tenant compte des horaires de vol, avec des vols directs 
 ou un nombre quelconque de correspondances.
 */
-WITH RECURSIVE Vols_Paris AS (
-    -- Anchor member : vols directs au départ de Paris
-    SELECT 
-        v.id_ville AS ville_arrivee,
-        v.nom_ville AS nom_ville_arrivee,
-        1 AS correspondances
-    FROM VOL vol
-    JOIN AEROPORT a ON vol.id_aeroport_depart = a.id_aeroport
-    JOIN VILLE v ON a.id_ville = v.id_ville
-    WHERE v.nom_ville = 'Paris'
-    
+WITH ACCESSIBLE (id_aeroport_arrivee, id_ville_arrivee, nom_ville_arrivee, date_arrive, nb_correspondances) AS (
+    SELECT
+        vol.id_aeroport_arrive,
+        v_arr.id_ville,
+        v_arr.nom_ville,
+        vol.date_arrive,
+        0
+    FROM VOL vol,
+         AEROPORT a_dep,
+         VILLE    v_dep,
+         AEROPORT a_arr,
+         VILLE    v_arr
+    WHERE vol.id_aeroport_depart = a_dep.id_aeroport
+      AND a_dep.id_ville         = v_dep.id_ville
+      AND v_dep.nom_ville        = 'Paris'
+      AND vol.id_aeroport_arrive = a_arr.id_aeroport
+      AND a_arr.id_ville         = v_arr.id_ville
     UNION ALL
-    
-    -- Recursive member : vols avec correspondances
-    SELECT 
-        v2.id_ville AS ville_arrivee,
-        v2.nom_ville AS nom_ville_arrivee,
-        vp.correspondances + 1 AS correspondances
-    FROM Vols_Paris vp
-    JOIN VOL vol ON vp.ville_arrivee = vol.id_aeroport_depart
-    JOIN AEROPORT a ON vol.id_aeroport_arrive = a.id_aeroport
-    JOIN VILLE v2 ON a.id_ville = v2.id_ville
-)
-SELECT DISTINCT nom_ville_arrivee, correspondances
-FROM Vols_Paris
-WHERE nom_ville_arrivee != 'Paris'
-ORDER BY nom_ville_arrivee;
+    SELECT
+        vol.id_aeroport_arrive,
+        v_arr.id_ville,
+        v_arr.nom_ville,
+        vol.date_arrive,
+        acc.nb_correspondances + 1
+    FROM ACCESSIBLE acc,
+         VOL        vol,
+         AEROPORT   a_arr,
+         VILLE      v_arr
+    WHERE vol.id_aeroport_depart = acc.id_aeroport_arrivee
+      AND vol.date_depart        > acc.date_arrive
+      AND vol.id_aeroport_arrive = a_arr.id_aeroport
+      AND a_arr.id_ville         = v_arr.id_ville
+) CYCLE id_ville_arrivee SET is_cycle TO '1' DEFAULT '0'
+SELECT DISTINCT nom_ville_arrivee AS ville_accessible, nb_correspondances
+FROM ACCESSIBLE
+WHERE is_cycle        = '0'
+  AND nom_ville_arrivee <> 'Paris'
+ORDER BY ville_accessible, nb_correspondances;
