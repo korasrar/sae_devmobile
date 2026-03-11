@@ -1,31 +1,64 @@
 :root {
+  /* ── Typographie ── */
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* ── Couleurs (thème sombre par défaut) ── */
+  color-scheme: light dark;
+  --color-primary:       #646cff;
+  --color-primary-hover: #535bf2;
+  --color-primary-dim:   #646cff44;
+
+  --color-bg:      #242424;
+  --color-surface: #1a1a1a;
+
+  --color-text:        rgba(255, 255, 255, 0.87);
+  --color-text-muted:  rgba(255, 255, 255, 0.70);
+  --color-text-subtle: rgba(255, 255, 255, 0.35);
+
+  /* ── Espacements ── */
+  --spacing-xs: 0.75rem;
+  --spacing-sm: 1.5rem;
+  --spacing-md: 2rem;
+
+  /* ── Formes ── */
+  --radius: 8px;
+
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-primary-hover: #747bff;
+
+    --color-bg:      #ffffff;
+    --color-surface: #f9f9f9;
+
+    --color-text:        #213547;
+    --color-text-muted:  #213547aa;
+    --color-text-subtle: #21354755;
+  }
 }
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--color-primary);
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--color-primary-hover);
 }
 
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  flex-direction: column;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -36,18 +69,18 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
+  border-radius: var(--radius);
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--color-surface);
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--color-primary);
 }
 button:focus,
 button:focus-visible {
@@ -59,21 +92,65 @@ button:focus-visible {
 }
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+main {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--spacing-md);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* ── Header ── */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-bottom: 1px solid var(--color-primary-dim);
+  background-color: var(--color-surface);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.app-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-primary);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.app-nav {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex: 1;
+}
+
+.app-nav a {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.app-nav a:hover,
+.app-nav a.router-link-active {
+  color: var(--color-primary);
+}
+
+.app-route {
+  font-size: 0.8rem;
+  color: var(--color-text-subtle);
+  font-family: monospace;
+  white-space: nowrap;
 }
