@@ -34,7 +34,7 @@
 }
 
 @media (prefers-color-scheme: light) {
-  :root {
+  :root:not([data-theme]) {
     --color-primary-hover: #747bff;
 
     --color-bg:      #ffffff;
@@ -44,6 +44,30 @@
     --color-text-muted:  #213547aa;
     --color-text-subtle: #21354755;
   }
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --color-primary-hover: #747bff;
+
+  --color-bg:      #ffffff;
+  --color-surface: #f9f9f9;
+
+  --color-text:        #213547;
+  --color-text-muted:  #213547aa;
+  --color-text-subtle: #21354755;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --color-primary-hover: #535bf2;
+
+  --color-bg:      #242424;
+  --color-surface: #1a1a1a;
+
+  --color-text:        rgba(255, 255, 255, 0.87);
+  --color-text-muted:  rgba(255, 255, 255, 0.70);
+  --color-text-subtle: rgba(255, 255, 255, 0.35);
 }
 
 a {
@@ -153,4 +177,21 @@ main {
   color: var(--color-text-subtle);
   font-family: monospace;
   white-space: nowrap;
+}
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--color-primary-dim);
+  border-radius: var(--radius);
+  padding: 0.3em 0.55em;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.theme-toggle:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-dim);
 }
