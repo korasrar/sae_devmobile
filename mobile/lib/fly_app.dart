@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/UI/myVols.dart';
 import 'package:mobile/UI/theme.dart';
 import 'package:mobile/UI/home.dart';
 import 'package:provider/provider.dart';
+import 'package:mobile/UI/settings.dart';
+
 import 'package:mobile/viewModel/settingViewModel.dart';
+import 'package:mobile/viewModel/myVolsViewModel.dart';
 
 class flyApp extends StatelessWidget{
   const flyApp({super.key});
@@ -17,6 +21,12 @@ class flyApp extends StatelessWidget{
                 SettingViewModel svm = SettingViewModel();
                 return svm;
               }
+          ),
+          ChangeNotifierProvider(
+            create: (_) {
+              MyVolsViewModel mvvm = MyVolsViewModel();
+              return mvvm;
+          }
           )
         ],
         child: Consumer<SettingViewModel>(
@@ -47,6 +57,8 @@ class _HomePageState extends State<HomePage>{
 
   List<Widget> pages = [
     home(),
+    myVols(),
+    EcranSettings()
   ];
 
   void _onItemTapped(int index) {
@@ -68,9 +80,19 @@ class _HomePageState extends State<HomePage>{
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
               icon: Icon(Icons.airplane_ticket),
-              label: "Home"
-          )
+              label: "Vols"
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: "Mes Vols"
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: "Settings"
+          ),
         ],
+        currentIndex: _seledtedIndex,
+        onTap: _onItemTapped,
       ),
     );
   }
