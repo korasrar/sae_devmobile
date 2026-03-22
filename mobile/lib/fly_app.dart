@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/UI/myVols.dart';
 import 'package:mobile/UI/theme.dart';
 import 'package:mobile/UI/home.dart';
+import 'package:mobile/UI/aeroport_map.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile/UI/settings.dart';
 
@@ -58,6 +59,7 @@ class _HomePageState extends State<HomePage>{
   List<Widget> pages = [
     home(),
     myVols(),
+    aeroports_map(),
     EcranSettings()
   ];
 
@@ -85,6 +87,10 @@ class _HomePageState extends State<HomePage>{
           BottomNavigationBarItem(
               icon: Icon(Icons.person),
               label: "Mes Vols"
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.map),
+              label: "Map"
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.settings),

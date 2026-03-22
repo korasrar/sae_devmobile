@@ -11,7 +11,7 @@ class Detail extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Task ${vol.terminal_depart} detail'),
+        title: Text('Detail du vol n°${vol.num_vol}'),
       ),
       body: Center(
         child: Column(
