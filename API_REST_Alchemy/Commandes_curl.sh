@@ -127,3 +127,9 @@ curl -i -H "Content-Type: application/json" \
 "date_depart":"2026-06-01T10:00:00"
 }' \
 http://localhost:5000/api/vols
+
+
+# ================= requetes =================
+curl -i http://localhost:5000/api/villes/Paris/destinations
+
+curl -X GET http://localhost:5000/api/destinations/paris

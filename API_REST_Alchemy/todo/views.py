@@ -3,6 +3,7 @@ from .app import app
 from .models import *
 
 
+
 # =====================
 # PAYS
 # =====================
@@ -222,3 +223,19 @@ def delete_vol_route():
     )
 
     return jsonify({"message": "Vol deleted"})
+
+
+#===========requetes==============
+
+@app.route("/api/villes/<ville>/destinations", methods=["GET"])
+def destinations_from_city(ville):
+
+    villes = get_destinations_from_city(ville)
+
+    return jsonify({"destinations": villes})
+
+
+@app.route("/api/destinations/paris", methods=["GET"])
+def get_destinations_paris():
+    result = get_accessible_cities_from_paris()
+    return jsonify(result)
