@@ -354,7 +354,59 @@ def get_destinations_from_city(ville_depart):
 
     return [r[0] for r in results]
 
-def get_accessible_cities_from_paris():
+
+def get_destinations_with_one_stop(ville_depart):
+
+    query = text("""
+    SELECT DISTINCT v_dest.nom_ville
+    FROM VOL v1
+    JOIN VOL v2 
+        ON v1.id_aeroport_arrive = v2.id_aeroport_depart 
+       AND v1.date_arrive < v2.date_depart
+    JOIN AEROPORT a_dep 
+        ON v1.id_aeroport_depart = a_dep.id_aeroport
+    JOIN VILLE v_dep 
+        ON a_dep.id_ville = v_dep.id_ville
+    JOIN AEROPORT a_dest 
+        ON v2.id_aeroport_arrive = a_dest.id_aeroport
+    JOIN VILLE v_dest 
+        ON a_dest.id_ville = v_dest.id_ville
+    WHERE v_dep.nom_ville = :ville
+    """)
+
+    result = db.session.execute(query, {"ville": ville_depart})
+
+    return [row[0] for row in result]
+
+
+def get_destinations_with_two_stops(ville_depart):
+
+    query = text("""
+    SELECT DISTINCT v_dest.nom_ville
+    FROM VOL v1
+    JOIN VOL v2 
+        ON v1.id_aeroport_arrive = v2.id_aeroport_depart 
+       AND v1.date_arrive < v2.date_depart
+    JOIN VOL v3 
+        ON v2.id_aeroport_arrive = v3.id_aeroport_depart 
+       AND v2.date_arrive < v3.date_depart
+    JOIN AEROPORT a_dep 
+        ON v1.id_aeroport_depart = a_dep.id_aeroport
+    JOIN VILLE v_dep 
+        ON a_dep.id_ville = v_dep.id_ville
+    JOIN AEROPORT a_dest 
+        ON v3.id_aeroport_arrive = a_dest.id_aeroport
+    JOIN VILLE v_dest 
+        ON a_dest.id_ville = v_dest.id_ville
+    WHERE v_dep.nom_ville = :ville
+    """)
+
+    result = db.session.execute(query, {"ville": ville_depart})
+
+    return [row[0] for row in result]
+
+
+def get_accessible_cities(ville_depart):
 
     query = text("""
     WITH RECURSIVE ACCESSIBLE(
@@ -377,7 +429,7 @@ def get_accessible_cities_from_paris():
         JOIN VILLE v_dep ON a_dep.id_ville = v_dep.id_ville
         JOIN AEROPORT a_arr ON vol.id_aeroport_arrive = a_arr.id_aeroport
         JOIN VILLE v_arr ON a_arr.id_ville = v_arr.id_ville
-        WHERE v_dep.nom_ville = 'Paris'
+        WHERE v_dep.nom_ville = :ville
 
         UNION ALL
 
@@ -394,8 +446,6 @@ def get_accessible_cities_from_paris():
            AND vol.date_depart > acc.date_arrive
         JOIN AEROPORT a_arr ON vol.id_aeroport_arrive = a_arr.id_aeroport
         JOIN VILLE v_arr ON a_arr.id_ville = v_arr.id_ville
-
-        -- évite les cycles (très important !)
         WHERE instr(path, vol.id_aeroport_arrive) = 0
     )
 
@@ -403,12 +453,12 @@ def get_accessible_cities_from_paris():
         nom_ville_arrivee AS ville_accessible,
         MIN(nb_correspondances) AS nb_correspondances
     FROM ACCESSIBLE
-    WHERE nom_ville_arrivee <> 'Paris'
+    WHERE nom_ville_arrivee <> :ville
     GROUP BY nom_ville_arrivee
     ORDER BY ville_accessible
     """)
 
-    result = db.session.execute(query)
+    result = db.session.execute(query, {"ville": ville_depart})
 
     return [
         {

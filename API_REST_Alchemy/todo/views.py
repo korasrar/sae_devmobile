@@ -234,8 +234,16 @@ def destinations_from_city(ville):
 
     return jsonify({"destinations": villes})
 
+@app.route("/api/destinations/<ville>/1-escale", methods=["GET"])
+def destinations_1_escale(ville):
+    return jsonify({"destinations": get_destinations_with_one_stop(ville)})
 
-@app.route("/api/destinations/paris", methods=["GET"])
-def get_destinations_paris():
-    result = get_accessible_cities_from_paris()
-    return jsonify(result)
+
+@app.route("/api/destinations/<ville>/2-escales", methods=["GET"])
+def destinations_2_escales(ville):
+    return jsonify({"destinations": get_destinations_with_two_stops(ville)})
+
+
+@app.route("/api/destinations/<ville>/toutes", methods=["GET"])
+def destinations_recursive(ville):
+    return jsonify(get_accessible_cities(ville))

@@ -132,4 +132,11 @@ http://localhost:5000/api/vols
 # ================= requetes =================
 curl -i http://localhost:5000/api/villes/Paris/destinations
 
-curl -X GET http://localhost:5000/api/destinations/paris
+# 1 escale
+curl http://localhost:5000/api/destinations/Paris/1-escale
+
+# 2 escales
+curl http://localhost:5000/api/destinations/Paris/2-escales
+
+# toutes (récursif)
+curl http://localhost:5000/api/destinations/Paris/toutes
