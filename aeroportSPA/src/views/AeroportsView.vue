@@ -35,11 +35,20 @@ function updateAeroport({ aeroport, newNomAeroport, newIdVille }) {
     fetchAeroports();
   });
 }
+
+function addAeroport() {
+  // rediriger vers la page d'ajout d'aéroport
+  window.location.href = "/aeroports/add";
+}
 </script>
 
 <template>
   <div class="list-container">
-    <h1>Liste des aéroports</h1>
+    <div>
+      <h1>Liste des aéroports</h1>
+      <button @click="addAeroport" class="btn-add">Ajouter un aéroport</button>
+    </div>
+
     <div class="list-items">
       <AeroportItem
         v-for="aeroport in aeroports"

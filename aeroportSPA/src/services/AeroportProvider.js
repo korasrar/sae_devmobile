@@ -77,6 +77,16 @@ export class AeroportProvider {
     });
   }
 
+  async addAeroport(nomAeroport, idVille) {
+    await fetch(this.apiEndpoint + 'aeroports', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ nom_aeroport: nomAeroport, id_ville: idVille })
+    });
+  }
+
   async deleteAeroport(id) {
     await fetch(this.apiEndpoint + 'aeroports/' + id, {
       method: 'DELETE'
