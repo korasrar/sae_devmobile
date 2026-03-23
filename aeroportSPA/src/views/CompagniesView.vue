@@ -35,11 +35,21 @@ function updateCompagnie({ compagnie, newNom, newIdPays }) {
     fetchCompagnies();
   });
 }
+
+function addCompagnie() {
+  // rediriger vers la page d'ajout de compagnie
+  window.location.href = "/compagnies/add";
+}
 </script>
 
 <template>
   <div class="list-container">
-    <h1>Liste des compagnies</h1>
+    <div>
+      <h1>Liste des compagnies</h1>
+      <button @click="addCompagnie" class="btn-add">
+        Ajouter une compagnie
+      </button>
+    </div>
     <div class="list-items">
       <CompagnieItem
         v-for="compagnie in compagnies"

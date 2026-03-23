@@ -8,6 +8,7 @@ import PaysView from "./views/PaysView.vue";
 import CompagniesView from "./views/CompagniesView.vue";
 import AeroportsView from "./views/AeroportsView.vue";
 import AeroportsAddView from "./views/AeroportsAddView.vue";
+import CompagniesAddView from "./views/CompagniesAddView.vue";
 
 const routes = [
   { path: "/", redirect: "/home" },
@@ -17,6 +18,7 @@ const routes = [
   { path: "/compagnies", component: CompagniesView },
   { path: "/aeroports", component: AeroportsView },
   { path: "/aeroports/add", component: AeroportsAddView },
+  { path: "/compagnies/add", component: CompagniesAddView },
   { path: "/:pathMatch(.*)*", redirect: "/home" },
 ];
 

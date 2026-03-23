@@ -61,6 +61,16 @@ export class AeroportProvider {
     });
   }
 
+  async addCompagnie(nomCompagnie, idPays) {
+    await fetch(this.apiEndpoint + 'compagnies', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ nom: nomCompagnie, id_pays: idPays })
+    });
+  }
+
   async deleteCompagnie(id) {
     await fetch(this.apiEndpoint + 'compagnies/' + id, {
       method: 'DELETE'
