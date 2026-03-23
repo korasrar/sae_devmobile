@@ -1,24 +1,14 @@
 {
   "pays": [
     {
-      "id_pays": "1",
-      "nom_pays": "Francetest",
-      "id": "1"
-    },
-    {
-      "id_pays": 2,
-      "nom_pays": "États-Uniscaca",
-      "id": "2"
-    },
-    {
       "id": "3",
       "id_pays": 3,
       "nom_pays": "Royaume-Uni"
     },
     {
-      "id": "4",
       "id_pays": 4,
-      "nom_pays": "Allemagne"
+      "nom_pays": "test",
+      "id": "4"
     },
     {
       "id": "5",
@@ -35,40 +25,34 @@
     {
       "id_ville": "6",
       "nom_ville": "caca",
-      "id_pays": 5,
+      "id_pays": "5",
       "id": "6"
-    },
-    {
-      "id_ville": "7",
-      "nom_ville": "caca",
-      "id_pays": 6,
-      "id": "7"
     }
   ],
   "aeroports": [
     {
-      "id": "1",
-      "id_aeroport": 1,
-      "nom_aeroport": "Paris Charles de Gaulle",
-      "id_ville": 1
+      "id_aeroport": "1",
+      "nom_aeroport": "daParis Charles de Gaulledcaca",
+      "id_ville": "6",
+      "id": "1"
     },
     {
-      "id": "2",
-      "id_aeroport": 2,
-      "nom_aeroport": "Paris Orly",
-      "id_ville": 1
+      "id_aeroport": "2",
+      "nom_aeroport": "Paris Orlycaca",
+      "id_ville": "6",
+      "id": "2"
     },
     {
-      "id": "3",
-      "id_aeroport": 3,
-      "nom_aeroport": "JFK International",
-      "id_ville": 2
+      "id_aeroport": "3",
+      "nom_aeroport": "JFK Internationalda",
+      "id_ville": 2,
+      "id": "3"
     },
     {
-      "id": "4",
-      "id_aeroport": 4,
-      "nom_aeroport": "Los Angeles Int",
-      "id_ville": 3
+      "id_aeroport": "4",
+      "nom_aeroport": "Los Angeles Intj",
+      "id_ville": "6",
+      "id": "4"
     },
     {
       "id": "5",
@@ -109,34 +93,34 @@
   ],
   "compagnies": [
     {
-      "id": "1",
-      "id_compagnie": 1,
+      "id_compagnie": "1",
       "nom": "Air France",
-      "id_pays": 1
+      "id_pays": "3",
+      "id": "1"
     },
     {
       "id": "2",
       "id_compagnie": 2,
       "nom": "Delta Airlines",
-      "id_pays": 2
+      "id_pays": "2"
     },
     {
-      "id": "3",
-      "id_compagnie": 3,
+      "id_compagnie": "3",
       "nom": "British Airways",
-      "id_pays": 3
+      "id_pays": "5",
+      "id": "3"
     },
     {
       "id": "4",
       "id_compagnie": 4,
       "nom": "Lufthansa",
-      "id_pays": 4
+      "id_pays": "4"
     },
     {
       "id": "5",
       "id_compagnie": 5,
       "nom": "Japan Airlines",
-      "id_pays": 5
+      "id_pays": "5"
     },
     {
       "id": "6",
