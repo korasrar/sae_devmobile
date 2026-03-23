@@ -2,35 +2,34 @@
 import { ref } from "vue";
 
 const props = defineProps({
-  ville: Object,
+  compagnie: Object,
   pays: Array,
 });
 
 const emit = defineEmits(["delete", "update"]);
 
 const isEditing = ref(false);
-const editedNomVille = ref("");
+const editedNom = ref("");
 const editedIdPays = ref(null);
 
-function deleteVille() {
-  // emit delete avec l'id de la ville
-  emit("delete", props.ville.id);
+function deleteCompagnie() {
+  emit("delete", props.compagnie.id);
 }
 
 function startEdit() {
   isEditing.value = true;
-  editedNomVille.value = props.ville.nom_ville;
-  editedIdPays.value = props.ville.id_pays;
+  editedNom.value = props.compagnie.nom;
+  editedIdPays.value = props.compagnie.id_pays;
 }
 
 function cancelEdit() {
   isEditing.value = false;
 }
 
-function saveVille() {
+function saveCompagnie() {
   emit("update", {
-    ville: props.ville,
-    newNomVille: editedNomVille.value,
+    compagnie: props.compagnie,
+    newNom: editedNom.value,
     newIdPays: editedIdPays.value,
   });
   isEditing.value = false;
@@ -39,30 +38,30 @@ function saveVille() {
 
 <template>
   <div class="item-card">
-    <!-- si on édite pas ( etat de base ) -->
     <div v-if="!isEditing" class="item-display">
       <div class="item-info">
-        <h3 class="item-name">{{ ville.nom_ville }}</h3>
+        <h3 class="item-name">{{ compagnie.nom }}</h3>
         <p class="item-detail">
           <span class="label">Pays:</span>
           <!--trouver le nom du pays-->
           <!--https://www.w3schools.com/jsreF/jsref_find.asp-->
           <span class="value">{{
-            pays.find((p) => p.id === ville.id_pays)?.nom_pays || "Non défini"
+            pays.find((p) => p.id === compagnie.id_pays)?.nom_pays ||
+            "Non défini"
           }}</span>
         </p>
       </div>
       <div class="item-actions">
         <button @click="startEdit" class="btn-edit">Modifier</button>
-        <button @click="deleteVille" class="btn-delete">Supprimer</button>
+        <button @click="deleteCompagnie" class="btn-delete">Supprimer</button>
       </div>
     </div>
-    <div v-else class="item-form" @keyup.enter="saveVille">
-      <h3 class="form-title">Modifier la ville</h3>
+    <div v-else class="item-form" @keyup.enter="saveCompagnie">
+      <h3 class="form-title">Modifier la compagnie</h3>
       <div class="form-group">
         <label class="form-label">
-          Nom de la ville:
-          <input v-model="editedNomVille" type="text" class="form-input" />
+          Nom de la compagnie:
+          <input v-model="editedNom" type="text" class="form-input" />
         </label>
       </div>
       <div class="form-group">
@@ -77,7 +76,7 @@ function saveVille() {
         </label>
       </div>
       <div class="form-actions">
-        <button @click="saveVille" class="btn-save">Enregistrer</button>
+        <button @click="saveCompagnie" class="btn-save">Enregistrer</button>
         <button @click="cancelEdit" class="btn-cancel">Annuler</button>
       </div>
     </div>
