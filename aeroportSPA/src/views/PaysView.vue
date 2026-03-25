@@ -28,11 +28,19 @@ function updatePays({ pays, newNomPays }) {
     fetchPays();
   });
 }
+
+function addPays() {
+  // rediriger vers la page d'ajout de pays
+  window.location.href = "/pays/add";
+}
 </script>
 
 <template>
   <div class="list-container">
-    <h1>Liste des pays</h1>
+    <div>
+      <h1>Liste des pays</h1>
+      <button @click="addPays" class="btn-add">Ajouter un pays</button>
+    </div>
     <div class="list-items">
       <PaysItem
         v-for="pays in pays"

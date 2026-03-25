@@ -7,13 +7,23 @@ import VillesView from "./views/VillesView.vue";
 import PaysView from "./views/PaysView.vue";
 import CompagniesView from "./views/CompagniesView.vue";
 import AeroportsView from "./views/AeroportsView.vue";
+import AeroportsAddView from "./views/AeroportsAddView.vue";
+import CompagniesAddView from "./views/CompagniesAddView.vue";
+import VillesAddView from "./views/VillesAddView.vue";
+import PaysAddView from "./views/PaysAddView.vue";
 
 const routes = [
+  { path: "/", redirect: "/home" },
   { path: "/home", component: HomeView },
   { path: "/villes", component: VillesView },
   { path: "/pays", component: PaysView },
   { path: "/compagnies", component: CompagniesView },
-  { path: "/aeroports", component: AeroportsView }
+  { path: "/aeroports", component: AeroportsView },
+  { path: "/aeroports/add", component: AeroportsAddView },
+  { path: "/compagnies/add", component: CompagniesAddView },
+  { path: "/villes/add", component: VillesAddView },
+  { path: "/pays/add", component: PaysAddView },
+  { path: "/:pathMatch(.*)*", redirect: "/home" },
 ];
 
 export const router = createRouter({

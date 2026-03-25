@@ -39,6 +39,16 @@ export class AeroportProvider {
     });
   }
 
+  async addVille(nomVille, idPays) {
+    await fetch(this.apiEndpoint + 'villes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ nom_ville: nomVille, id_pays: idPays })
+    });
+  }
+
   async getPays() {
     const response = await fetch(this.apiEndpoint + 'pays');
     return await response.json();
@@ -61,6 +71,26 @@ export class AeroportProvider {
     });
   }
 
+  async addPays(nomPays) {
+    await fetch(this.apiEndpoint + 'pays', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ nom_pays: nomPays })
+    });
+  }
+
+  async addCompagnie(nomCompagnie, idPays) {
+    await fetch(this.apiEndpoint + 'compagnies', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ nom: nomCompagnie, id_pays: idPays })
+    });
+  }
+
   async deleteCompagnie(id) {
     await fetch(this.apiEndpoint + 'compagnies/' + id, {
       method: 'DELETE'
@@ -74,6 +104,16 @@ export class AeroportProvider {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ id_compagnie: compagnie.id, nom: newNom, id_pays: newIdPays || compagnie.id_pays })
+    });
+  }
+
+  async addAeroport(nomAeroport, idVille) {
+    await fetch(this.apiEndpoint + 'aeroports', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ nom_aeroport: nomAeroport, id_ville: idVille })
     });
   }
 

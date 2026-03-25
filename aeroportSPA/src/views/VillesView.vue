@@ -37,11 +37,19 @@ function updateVille({ ville, newNomVille, newIdPays }) {
     fetchVilles();
   });
 }
+
+function addVille() {
+  // rediriger vers la page d'ajout de ville
+  window.location.href = "/villes/add";
+}
 </script>
 
 <template>
   <div class="list-container">
-    <h1>Liste des villes</h1>
+    <div>
+      <h1>Liste des villes</h1>
+      <button @click="addVille" class="btn-add">Ajouter une ville</button>
+    </div>
     <div class="list-items">
       <VilleItem
         v-for="ville in villes"
