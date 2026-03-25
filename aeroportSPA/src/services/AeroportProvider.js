@@ -39,6 +39,16 @@ export class AeroportProvider {
     });
   }
 
+  async addVille(nomVille, idPays) {
+    await fetch(this.apiEndpoint + 'villes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ nom_ville: nomVille, id_pays: idPays })
+    });
+  }
+
   async getPays() {
     const response = await fetch(this.apiEndpoint + 'pays');
     return await response.json();
@@ -58,6 +68,16 @@ export class AeroportProvider {
       },
       // envoyer l'id pays en int
       body: JSON.stringify({ id_pays: parseInt(pays.id), nom_pays: newNomPays })
+    });
+  }
+
+  async addPays(nomPays) {
+    await fetch(this.apiEndpoint + 'pays', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ nom_pays: nomPays })
     });
   }
 

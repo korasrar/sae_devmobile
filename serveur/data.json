@@ -19,6 +19,10 @@
       "id": "6",
       "id_pays": 6,
       "nom_pays": "Émirats Arabes Unis"
+    },
+    {
+      "id": "5ab6",
+      "nom_pays": "test"
     }
   ],
   "villes": [
@@ -27,6 +31,11 @@
       "nom_ville": "caca",
       "id_pays": "5",
       "id": "6"
+    },
+    {
+      "id": "a332",
+      "nom_ville": "Orléans",
+      "id_pays": "6"
     }
   ],
   "aeroports": [
@@ -99,6 +108,11 @@
       "id": "a3d4",
       "nom_aeroport": "test",
       "id_ville": "6"
+    },
+    {
+      "id": "813b",
+      "nom_aeroport": "test",
+      "id_ville": "6"
     }
   ],
   "compagnies": [
@@ -147,6 +161,11 @@
     {
       "id": "46e7",
       "nom": "testnom",
+      "id_pays": "5"
+    },
+    {
+      "id": "f5ae",
+      "nom": "caca",
       "id_pays": "5"
     }
   ],
