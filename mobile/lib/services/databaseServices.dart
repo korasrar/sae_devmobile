@@ -8,14 +8,12 @@ class databaseServices{
   databaseServices({required this.db});
 
   Future<List<Vol>> getVolsPerso() async{
-    final List<Map<String, Object?>> volsMap = await db.query('VOLPROFESSIONNELS');
-
+    final List<Map<String, Object?>> volsMap = await db.query('VOLPERSOS');
     return volsMap.map((map) => Vol.fromMap(map)).toList();
   }
 
   Future<List<Vol>> getVolsPro() async{
-    final List<Map<String, Object?>> volsMap = await db.query('VOLPERSOS');
-
+    final List<Map<String, Object?>> volsMap = await db.query('VOLPROFESSIONNELS');
     return volsMap.map((map) => Vol.fromMap(map)).toList();
   }
 
@@ -41,6 +39,7 @@ class databaseServices{
       vol.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    print(await db.query('VOLPROFESSIONNELS'));
 
   }
 

@@ -13,12 +13,16 @@ import 'package:mobile/services/databaseServices.dart';
 class MyVolsViewModel extends ChangeNotifier {
   final databaseServices database;
 
-  MyVolsViewModel({required this.database});
+  List<Vol> _volsPros  = [];
+  List<Vol> get volsPros => _volsPros;
 
-  Future<List<Vol>> getVolsPerso() async{
-    final List<Vol> volPersos = await this.database.getVolsPerso();
-    return volPersos;
+  MyVolsViewModel({required this.database}){
+    loadVolsPerso();
+  }
 
+  Future<void> loadVolsPerso() async {
+    _volsPros = await database.getVolsPro();
+    notifyListeners();
   }
 
   Future<List<Vol>> getVolsPro() async{
@@ -28,22 +32,23 @@ class MyVolsViewModel extends ChangeNotifier {
 
   void addVolPerso(Vol vol) async{
     await this.database.insertVolPerso(vol);
-    notifyListeners();
+    await loadVolsPerso();
   }
 
   void addVolPro(Vol vol) async{
     await this.database.insertVolPro(vol);
-    notifyListeners();
+    await loadVolsPerso();
+
   }
 
   void removeVolPerso(Vol vol) async{
     await this.database.deleteVolPerso(vol.num_vol, vol.id_compagnie, vol.date_depart);
-    notifyListeners();
+    await loadVolsPerso();
   }
 
   void removeVolPro(Vol vol) async{
     await this.database.deleteVolPro(vol.num_vol, vol.id_compagnie, vol.date_depart);
-    notifyListeners();
+    await loadVolsPerso();
   }
 
 }

@@ -7,11 +7,11 @@ import 'detail.dart';
 class myVols extends StatelessWidget{
   myVols({super.key});
 
-  late List<Vol> vols; //= Task.generateTask(50);
+  late List<Vol> vols;
 
   @override
   Widget build(BuildContext context) {
-    vols = context.watch<MyVolsViewModel>().liste;
+    vols = context.watch<MyVolsViewModel>().volsPros;
     return ListView.builder(
         itemCount: vols.length,
         itemBuilder: (BuildContext context, int index){
@@ -22,16 +22,14 @@ class myVols extends StatelessWidget{
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: Colors.lightBlue,
-                child:  Text(vols[index].num_vol.toString()
-                ),
+                child:  Text(vols[index].num_vol.toString()),
               ),
               title: Text(vols[index].date_depart),
               subtitle: Text(vols[index].date_arrive),
             ),
           );
         }
-    );
+        );
   }
-
-
 }
+
