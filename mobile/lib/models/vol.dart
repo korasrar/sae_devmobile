@@ -19,6 +19,17 @@ class Vol{
     required this.terminal_arrive
   });
 
+  Map<String, Object?> toMap() {
+    return {'num_vol': num_vol,
+            'id_compagnie': id_compagnie,
+            'date_depart': date_depart,
+            'date_arrive': date_arrive,
+            'id_aeroport_depart': id_aeroport_depart,
+            'id_aeroport_arrive': id_aeroport_arrive,
+            'terminal_depart': terminal_depart,
+            'terminal_arrive': terminal_arrive};
+  }
+
   factory Vol.fromJson(Map<String, dynamic> json) {
     return Vol(
       num_vol: json['num_vol'],
@@ -30,6 +41,19 @@ class Vol{
       terminal_depart: json['terminal_depart'],
       terminal_arrive: json['terminal_arrive']
 
+    );
+  }
+
+  factory Vol.fromMap(Map<String, dynamic> map) {
+    return Vol(
+      num_vol: map['num_vol'],
+      id_compagnie: map['id_compagnie'],
+        date_depart: map['date_depart'],
+      date_arrive: map['date_arrive'],
+      id_aeroport_depart: map['id_aeroport_depart'],
+      id_aeroport_arrive: map['id_aeroport_arrive'],
+      terminal_depart: map['terminal_depart'],
+      terminal_arrive: map['terminal_arrive']
     );
   }
 

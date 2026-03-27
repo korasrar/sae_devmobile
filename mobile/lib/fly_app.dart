@@ -6,12 +6,15 @@ import 'package:mobile/UI/home.dart';
 import 'package:mobile/UI/aeroport_map.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile/UI/settings.dart';
+import 'package:mobile/services/databaseServices.dart';
 
 import 'package:mobile/viewModel/settingViewModel.dart';
 import 'package:mobile/viewModel/myVolsViewModel.dart';
+import 'package:sqflite/sqflite.dart';
 
 class flyApp extends StatelessWidget{
-  const flyApp({super.key});
+  final Database db;
+  const flyApp({super.key, required this.db});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class flyApp extends StatelessWidget{
           ),
           ChangeNotifierProvider(
             create: (_) {
-              MyVolsViewModel mvvm = MyVolsViewModel();
+              MyVolsViewModel mvvm = MyVolsViewModel(database: databaseServices(db: db));
               return mvvm;
           }
           )
