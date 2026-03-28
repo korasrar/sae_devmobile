@@ -7,6 +7,7 @@ class Vol{
   int id_aeroport_arrive;
   int terminal_depart;
   int terminal_arrive;
+  bool isPro;
 
   Vol({
     required this.num_vol,
@@ -16,7 +17,8 @@ class Vol{
     required this.id_aeroport_depart,
     required this.id_aeroport_arrive,
     required this.terminal_depart,
-    required this.terminal_arrive
+    required this.terminal_arrive,
+    this.isPro = false,
   });
 
   Map<String, Object?> toMap() {

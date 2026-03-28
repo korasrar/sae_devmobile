@@ -13,42 +13,54 @@ import 'package:mobile/services/databaseServices.dart';
 class MyVolsViewModel extends ChangeNotifier {
   final databaseServices database;
 
-  List<Vol> _volsPros  = [];
-  List<Vol> get volsPros => _volsPros;
+  List<Vol> _allVols  = [];
+  
+  // Filtres : [Perso, Pro]
+  List<bool> _selectedFilters = [true, true];
+  List<bool> get selectedFilters => _selectedFilters;
 
-  MyVolsViewModel({required this.database}){
-    loadVolsPerso();
+  List<Vol> get filteredVols {
+    return _allVols.where((vol) {
+      if (vol.isPro) {
+        return _selectedFilters[1]; // Filtre Pro
+      } else {
+        return _selectedFilters[0]; // Filtre Perso
+      }
+    }).toList();
   }
 
-  Future<void> loadVolsPerso() async {
-    _volsPros = await database.getVolsPro();
+  MyVolsViewModel({required this.database}){
+    loadAllVols();
+  }
+
+  Future<void> loadAllVols() async {
+    final pros = await database.getVolsPro();
+    final persos = await database.getVolsPerso();
+    _allVols = [...pros, ...persos];
     notifyListeners();
   }
 
-  Future<List<Vol>> getVolsPro() async{
-    final List<Vol> volPros = await this.database.getVolsPro();
-    return volPros;
+  void toggleFilter(int index) {
+    _selectedFilters[index] = !_selectedFilters[index];
+    notifyListeners();
   }
 
-  void addVolPerso(Vol vol) async{
-    await this.database.insertVolPerso(vol);
-    await loadVolsPerso();
+  void deleteVol(Vol vol) async {
+    if (vol.isPro) {
+      await database.deleteVolPro(vol.num_vol, vol.id_compagnie, vol.date_depart);
+    } else {
+      await database.deleteVolPerso(vol.num_vol, vol.id_compagnie, vol.date_depart);
+    }
+    await loadAllVols();
   }
 
-  void addVolPro(Vol vol) async{
-    await this.database.insertVolPro(vol);
-    await loadVolsPerso();
-
-  }
-
-  void removeVolPerso(Vol vol) async{
-    await this.database.deleteVolPerso(vol.num_vol, vol.id_compagnie, vol.date_depart);
-    await loadVolsPerso();
-  }
-
-  void removeVolPro(Vol vol) async{
-    await this.database.deleteVolPro(vol.num_vol, vol.id_compagnie, vol.date_depart);
-    await loadVolsPerso();
+  void addVol(Vol vol) async {
+    if (vol.isPro) {
+      await database.insertVolPro(vol);
+    } else {
+      await database.insertVolPerso(vol);
+    }
+    await loadAllVols();
   }
 
 }
