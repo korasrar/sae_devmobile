@@ -1,8 +1,10 @@
 <script setup>
 import { ref, onMounted, inject } from "vue";
+import { useNotification } from "@kyvg/vue3-notification";
 import VilleItem from "../components/VilleItem.vue";
 
 const provider = inject("aeroportProvider");
+const { notify } = useNotification();
 
 const villes = ref([]);
 const pays = ref([]);
@@ -15,27 +17,39 @@ onMounted(() => {
 function fetchVilles() {
   provider.getVilles().then((data) => {
     villes.value = data;
+  }).catch((error) => {
+    notify({ type: "error", text: error.message });
   });
 }
 
 function fetchPays() {
   provider.getPays().then((data) => {
     pays.value = data;
+  }).catch((error) => {
+    notify({ type: "error", text: error.message });
   });
 }
 
 function deleteVille(id) {
-  provider.deleteVille(id).then(() => {
-    // rafraichir la liste des villes
-    fetchVilles();
-  });
+  provider.deleteVille(id)
+    .then(() => {
+      notify({ type: "success", text: "Ville supprimée avec succès !" });
+      fetchVilles();
+    })
+    .catch((error) => {
+      notify({ type: "error", text: error.message });
+    });
 }
 
 function updateVille({ ville, newNomVille, newIdPays }) {
-  provider.updateVille(ville, newNomVille, newIdPays).then(() => {
-    // rafraichir la liste des villes
-    fetchVilles();
-  });
+  provider.updateVille(ville, newNomVille, newIdPays)
+    .then(() => {
+      notify({ type: "success", text: "Ville modifiée avec succès !" });
+      fetchVilles();
+    })
+    .catch((error) => {
+      notify({ type: "error", text: error.message });
+    });
 }
 
 function addVille() {

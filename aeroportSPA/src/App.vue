@@ -1,20 +1,25 @@
 <script setup>
-import { ref, provide } from 'vue'
+import { ref, provide } from "vue";
 
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-const isDark = ref(prefersDark)
-document.documentElement.setAttribute('data-theme', isDark.value ? 'dark' : 'light')
+const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+const isDark = ref(prefersDark);
+document.documentElement.setAttribute(
+  "data-theme",
+  isDark.value ? "dark" : "light",
+);
 
 function toggleTheme() {
-  isDark.value = !isDark.value
-  document.documentElement.setAttribute('data-theme', isDark.value ? 'dark' : 'light')
+  isDark.value = !isDark.value;
+  document.documentElement.setAttribute(
+    "data-theme",
+    isDark.value ? "dark" : "light",
+  );
 }
 
-import { AeroportProvider } from './services/AeroportProvider'
-import { API_ENDPOINT } from './config.js'
-const provider = new AeroportProvider(API_ENDPOINT)
-provide('aeroportProvider', provider)
-
+import { AeroportProvider } from "./services/AeroportProvider";
+import { API_ENDPOINT } from "./config.js";
+const provider = new AeroportProvider(API_ENDPOINT);
+provide("aeroportProvider", provider);
 </script>
 
 <template>
@@ -35,10 +40,11 @@ provide('aeroportProvider', provider)
       :title="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
       :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
     >
-      {{ isDark ? '☀️' : '🌙' }}
+      {{ isDark ? "☀️" : "🌙" }}
     </button>
   </header>
   <main>
+    <notifications position="bottom left" />
     <RouterView />
   </main>
 </template>

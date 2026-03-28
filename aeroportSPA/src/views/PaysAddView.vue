@@ -1,15 +1,21 @@
 <script setup>
 import { ref, inject } from "vue";
+import { useNotification } from "@kyvg/vue3-notification";
 
 const provider = inject("aeroportProvider");
+const { notify } = useNotification();
 
 const newNomPays = ref("");
 
 function addPays() {
-  provider.addPays(newNomPays.value).then(() => {
-    // réinitialiser les champs du formulaire
-    newNomPays.value = "";
-  });
+  provider.addPays(newNomPays.value)
+    .then(() => {
+      notify({ type: "success", text: "Pays ajouté avec succès !" });
+      newNomPays.value = "";
+    })
+    .catch((error) => {
+      notify({ type: "error", text: error.message });
+    });
 }
 
 function goToPays() {

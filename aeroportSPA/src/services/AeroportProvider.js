@@ -4,132 +4,212 @@ export class AeroportProvider {
   }
 
   async getAeroports() {
-    const response = await fetch(this.apiEndpoint + 'aeroports');
-    return await response.json();
+    try {
+      const response = await fetch(this.apiEndpoint + 'aeroports');
+      return await response.json();
+    } catch (error) {
+      throw new Error('Erreur lors de la récupération des aéroports');
+    }
   }
 
   async getVols() {
-    const response = await fetch(this.apiEndpoint + 'vols');
-    return await response.json();
+    try {
+      const response = await fetch(this.apiEndpoint + 'vols');
+      return await response.json();
+    } catch (error) {
+      throw new Error('Erreur lors de la récupération des vols');
+    }
   }
 
   async getCompagnies() {
-    const response = await fetch(this.apiEndpoint + 'compagnies');
-    return await response.json();
+    try {
+      const response = await fetch(this.apiEndpoint + 'compagnies');
+      return await response.json();
+    } catch (error) {
+      throw new Error('Erreur lors de la récupération des compagnies');
+    }
   }
 
   async getVilles() {
-    const response = await fetch(this.apiEndpoint + 'villes');
-    return await response.json();
+    try {
+      const response = await fetch(this.apiEndpoint + 'villes');
+      return await response.json();
+    } catch (error) {
+      throw new Error('Erreur lors de la récupération des villes');
+    }
   }
 
   async deleteVille(id) {
-    await fetch(this.apiEndpoint + 'villes/' + id, {
-      method: 'DELETE'
-    });
+    try {
+      await fetch(this.apiEndpoint + 'villes/' + id, {
+        method: 'DELETE'
+      });
+      return { success: true };
+    } catch (error) {
+      throw new Error('Erreur lors de la suppression de la ville');
+    }
   }
 
   async updateVille(ville, newNomVille, newIdPays) {
-    await fetch(this.apiEndpoint + 'villes/' + ville.id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ id_ville: ville.id, nom_ville: newNomVille, id_pays: newIdPays || ville.id_pays })
-    });
+    try {
+      await fetch(this.apiEndpoint + 'villes/' + ville.id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id_ville: ville.id, nom_ville: newNomVille, id_pays: newIdPays || ville.id_pays })
+      });
+      return { success: true };
+    } catch (error) {
+      throw new Error('Erreur lors de la modification de la ville');
+    }
   }
 
   async addVille(nomVille, idPays) {
-    await fetch(this.apiEndpoint + 'villes', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ nom_ville: nomVille, id_pays: idPays })
-    });
+    try {
+      await fetch(this.apiEndpoint + 'villes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ nom_ville: nomVille, id_pays: idPays })
+      });
+      return { success: true };
+    } catch (error) {
+      throw new Error('Erreur lors de l\'ajout de la ville');
+    }
   }
 
   async getPays() {
-    const response = await fetch(this.apiEndpoint + 'pays');
-    return await response.json();
+    try {
+      const response = await fetch(this.apiEndpoint + 'pays');
+      return await response.json();
+    } catch (error) {
+      throw new Error('Erreur lors de la récupération des pays');
+    }
   }
 
   async deletePays(id) {
-    await fetch(this.apiEndpoint + 'pays/' + id, {
-      method: 'DELETE'
-    });
+    try {
+      await fetch(this.apiEndpoint + 'pays/' + id, {
+        method: 'DELETE'
+      });
+      return { success: true };
+    } catch (error) {
+      throw new Error('Erreur lors de la suppression du pays');
+    }
   }
 
   async updatePays(pays, newNomPays) {
-    await fetch(this.apiEndpoint + 'pays/' + pays.id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      // envoyer l'id pays en int
-      body: JSON.stringify({ id_pays: parseInt(pays.id), nom_pays: newNomPays })
-    });
+    try {
+      await fetch(this.apiEndpoint + 'pays/' + pays.id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        // envoyer l'id pays en int
+        body: JSON.stringify({ id_pays: parseInt(pays.id), nom_pays: newNomPays })
+      });
+      return { success: true };
+    } catch (error) {
+      throw new Error('Erreur lors de la modification du pays');
+    }
   }
 
   async addPays(nomPays) {
-    await fetch(this.apiEndpoint + 'pays', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ nom_pays: nomPays })
-    });
+    try {
+      await fetch(this.apiEndpoint + 'pays', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ nom_pays: nomPays })
+      });
+      return { success: true };
+    } catch (error) {
+      throw new Error('Erreur lors de l\'ajout du pays');
+    }
   }
 
   async addCompagnie(nomCompagnie, idPays) {
-    await fetch(this.apiEndpoint + 'compagnies', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ nom: nomCompagnie, id_pays: idPays })
-    });
+    try {
+      await fetch(this.apiEndpoint + 'compagnies', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ nom: nomCompagnie, id_pays: idPays })
+      });
+      return { success: true };
+    } catch (error) {
+      throw new Error('Erreur lors de l\'ajout de la compagnie');
+    }
   }
 
   async deleteCompagnie(id) {
-    await fetch(this.apiEndpoint + 'compagnies/' + id, {
-      method: 'DELETE'
-    });
+    try {
+      await fetch(this.apiEndpoint + 'compagnies/' + id, {
+        method: 'DELETE'
+      });
+      return { success: true };
+    } catch (error) {
+      throw new Error('Erreur lors de la suppression de la compagnie');
+    }
   }
 
   async updateCompagnie(compagnie, newNom, newIdPays) {
-    await fetch(this.apiEndpoint + 'compagnies/' + compagnie.id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ id_compagnie: compagnie.id, nom: newNom, id_pays: newIdPays || compagnie.id_pays })
-    });
+    try {
+      await fetch(this.apiEndpoint + 'compagnies/' + compagnie.id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id_compagnie: compagnie.id, nom: newNom, id_pays: newIdPays || compagnie.id_pays })
+      });
+      return { success: true };
+    } catch (error) {
+      throw new Error('Erreur lors de la modification de la compagnie');
+    }
   }
 
   async addAeroport(nomAeroport, idVille) {
-    await fetch(this.apiEndpoint + 'aeroports', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ nom_aeroport: nomAeroport, id_ville: idVille })
-    });
+    try {
+      await fetch(this.apiEndpoint + 'aeroports', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ nom_aeroport: nomAeroport, id_ville: idVille })
+      });
+      return { success: true };
+    } catch (error) {
+      throw new Error('Erreur lors de l\'ajout de l\'aéroport');
+    }
   }
 
   async deleteAeroport(id) {
-    await fetch(this.apiEndpoint + 'aeroports/' + id, {
-      method: 'DELETE'
-    });
+    try {
+      await fetch(this.apiEndpoint + 'aeroports/' + id, {
+        method: 'DELETE'
+      });
+      return { success: true };
+    } catch (error) {
+      throw new Error('Erreur lors de la suppression de l\'aéroport');
+    }
   }
 
   async updateAeroport(aeroport, newNomAeroport, newIdVille) {
-    await fetch(this.apiEndpoint + 'aeroports/' + aeroport.id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ id_aeroport: aeroport.id, nom_aeroport: newNomAeroport, id_ville: newIdVille || aeroport.id_ville })
-    });
+    try {
+      await fetch(this.apiEndpoint + 'aeroports/' + aeroport.id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id_aeroport: aeroport.id, nom_aeroport: newNomAeroport, id_ville: newIdVille || aeroport.id_ville })
+      });
+      return { success: true };
+    } catch (error) {
+      throw new Error('Erreur lors de la modification de l\'aéroport');
+    }
   }
 }

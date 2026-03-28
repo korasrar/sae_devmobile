@@ -1,8 +1,10 @@
 <script setup>
 import { ref, onMounted, inject } from "vue";
+import { useNotification } from "@kyvg/vue3-notification";
 import AeroportItem from "../components/AeroportItem.vue";
 
 const provider = inject("aeroportProvider");
+const { notify } = useNotification();
 
 const aeroports = ref([]);
 const villes = ref([]);
@@ -15,25 +17,39 @@ onMounted(() => {
 function fetchAeroports() {
   provider.getAeroports().then((data) => {
     aeroports.value = data;
+  }).catch((error) => {
+    notify({ type: "error", text: error.message });
   });
 }
 
 function fetchVilles() {
   provider.getVilles().then((data) => {
     villes.value = data;
+  }).catch((error) => {
+    notify({ type: "error", text: error.message });
   });
 }
 
 function deleteAeroport(id) {
-  provider.deleteAeroport(id).then(() => {
-    fetchAeroports();
-  });
+  provider.deleteAeroport(id)
+    .then(() => {
+      notify({ type: "success", text: "Aéroport supprimé avec succès !" });
+      fetchAeroports();
+    })
+    .catch((error) => {
+      notify({ type: "error", text: error.message });
+    });
 }
 
 function updateAeroport({ aeroport, newNomAeroport, newIdVille }) {
-  provider.updateAeroport(aeroport, newNomAeroport, newIdVille).then(() => {
-    fetchAeroports();
-  });
+  provider.updateAeroport(aeroport, newNomAeroport, newIdVille)
+    .then(() => {
+      notify({ type: "success", text: "Aéroport modifié avec succès !" });
+      fetchAeroports();
+    })
+    .catch((error) => {
+      notify({ type: "error", text: error.message });
+    });
 }
 
 function addAeroport() {
