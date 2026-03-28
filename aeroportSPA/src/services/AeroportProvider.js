@@ -212,4 +212,45 @@ export class AeroportProvider {
       throw new Error('Erreur lors de la modification de l\'aéroport');
     }
   }
+
+  async addVol(idCompagnie, idAeroportDepart, idAeroportArrivee, dateDepart, dateArrivee) {
+    try {
+      await fetch(this.apiEndpoint + 'vols', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id_compagnie: idCompagnie, id_aeroport_depart: idAeroportDepart, id_aeroport_arrive: idAeroportArrivee, date_depart: dateDepart, date_arrive: dateArrivee })
+      });
+      return { success: true };
+    } catch (error) {
+      throw new Error('Erreur lors de l\'ajout du vol');
+    }
+  }
+
+  async deleteVol(id) {
+    try {
+      await fetch(this.apiEndpoint + 'vols/' + id, {
+        method: 'DELETE'
+      });
+      return { success: true };
+    } catch (error) {
+      throw new Error('Erreur lors de la suppression du vol');
+    }
+  }
+
+  async updateVol(vol, newDateDepart, newDateArrive, newterminalDepart, newterminalArrive, newIdAeroportDepart, newIdAeroportArrive, newCompagnie) {
+    try {
+      await fetch(this.apiEndpoint + 'vols/' + vol.id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({num_vol: vol.num_vol, id_compagnie: newCompagnie, id_aeroport_depart: newIdAeroportDepart, id_aeroport_arrive: newIdAeroportArrive, date_depart: newDateDepart, date_arrive: newDateArrive, terminal_depart: newterminalDepart, terminal_arrive: newterminalArrive })
+      });
+      return { success: true };
+    } catch (error) {
+      throw new Error('Erreur lors de la modification du vol');
+    }
+  }
 }
