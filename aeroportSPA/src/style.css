@@ -363,3 +363,66 @@ main {
     flex: 1;
   }
 }
+
+/* ── Notifications ── */
+.vue-notification-group {
+  margin: 1rem;
+}
+
+.vue-notification-wrapper {
+  margin-bottom: 0.75rem;
+}
+
+.vue-notification {
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-left: 4px solid;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.vue-notification.success {
+  border-left-color: #28a745;
+  background-color: #d4edda;
+  color: #155724;
+}
+
+[data-theme="dark"] .vue-notification.success {
+  background-color: #1e4620;
+  color: #7dff8e;
+}
+
+.vue-notification.error {
+  border-left-color: #dc3545;
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+[data-theme="dark"] .vue-notification.error {
+  background-color: #4a1e22;
+  color: #ff7b7b;
+}
+
+.vue-notification.warn {
+  border-left-color: #ffc107;
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+[data-theme="dark"] .vue-notification.warn {
+  background-color: #4a3f1e;
+  color: #ffd87d;
+}
+
+.vue-notification.info {
+  border-left-color: #17a2b8;
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+[data-theme="dark"] .vue-notification.info {
+  background-color: #1e3a3f;
+  color: #7ddbff;
+}

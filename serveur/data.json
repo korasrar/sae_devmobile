@@ -117,55 +117,8 @@
   ],
   "compagnies": [
     {
-      "id_compagnie": "1",
-      "nom": "Air France",
-      "id_pays": "3",
-      "id": "1"
-    },
-    {
-      "id": "2",
-      "id_compagnie": 2,
-      "nom": "Delta Airlines",
-      "id_pays": "2"
-    },
-    {
-      "id_compagnie": "3",
-      "nom": "British Airways",
-      "id_pays": "5",
-      "id": "3"
-    },
-    {
-      "id": "4",
-      "id_compagnie": 4,
-      "nom": "Lufthansa",
-      "id_pays": "4"
-    },
-    {
-      "id": "5",
-      "id_compagnie": 5,
-      "nom": "Japan Airlines",
-      "id_pays": "5"
-    },
-    {
-      "id": "6",
-      "id_compagnie": 6,
-      "nom": "Emirates",
-      "id_pays": 6
-    },
-    {
-      "id_compagnie": "8455",
+      "id": "ebe4",
       "nom": "test",
-      "id_pays": "5",
-      "id": "8455"
-    },
-    {
-      "id": "46e7",
-      "nom": "testnom",
-      "id_pays": "5"
-    },
-    {
-      "id": "f5ae",
-      "nom": "caca",
       "id_pays": "5"
     }
   ],

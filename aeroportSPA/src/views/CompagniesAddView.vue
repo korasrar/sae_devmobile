@@ -1,7 +1,9 @@
 <script setup>
 import { ref, onMounted, inject } from "vue";
+import { useNotification } from "@kyvg/vue3-notification";
 
 const provider = inject("aeroportProvider");
+const { notify } = useNotification();
 
 const pays = ref([]);
 const newNomCompagnie = ref("");
@@ -14,15 +16,21 @@ onMounted(() => {
 function fetchPays() {
   provider.getPays().then((data) => {
     pays.value = data;
+  }).catch((error) => {
+    notify({ type: "error", text: error.message });
   });
 }
 
 function addCompagnie() {
-  provider.addCompagnie(newNomCompagnie.value, newIdPays.value).then(() => {
-    // réinitialiser les champs du formulaire
-    newNomCompagnie.value = "";
-    newIdPays.value = "";
-  });
+  provider.addCompagnie(newNomCompagnie.value, newIdPays.value)
+    .then(() => {
+      notify({ type: "success", text: "Compagnie ajoutée avec succès !" });
+      newNomCompagnie.value = "";
+      newIdPays.value = "";
+    })
+    .catch((error) => {
+      notify({ type: "error", text: error.message });
+    });
 }
 
 function goToCompagnies() {

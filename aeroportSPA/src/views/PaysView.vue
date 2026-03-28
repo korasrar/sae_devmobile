@@ -1,8 +1,10 @@
 <script setup>
 import { ref, onMounted, inject } from "vue";
+import { useNotification } from "@kyvg/vue3-notification";
 import PaysItem from "../components/PaysItem.vue";
 
 const provider = inject("aeroportProvider");
+const { notify } = useNotification();
 
 const pays = ref([]);
 onMounted(() => {
@@ -12,21 +14,31 @@ onMounted(() => {
 function fetchPays() {
   provider.getPays().then((data) => {
     pays.value = data;
+  }).catch((error) => {
+    notify({ type: "error", text: error.message });
   });
 }
 
 function deletePays(id) {
-  provider.deletePays(id).then(() => {
-    // rafraichir la liste des pays
-    fetchPays();
-  });
+  provider.deletePays(id)
+    .then(() => {
+      notify({ type: "success", text: "Pays supprimé avec succès !" });
+      fetchPays();
+    })
+    .catch((error) => {
+      notify({ type: "error", text: error.message });
+    });
 }
 
 function updatePays({ pays, newNomPays }) {
-  provider.updatePays(pays, newNomPays).then(() => {
-    // rafraichir la liste des pays
-    fetchPays();
-  });
+  provider.updatePays(pays, newNomPays)
+    .then(() => {
+      notify({ type: "success", text: "Pays modifié avec succès !" });
+      fetchPays();
+    })
+    .catch((error) => {
+      notify({ type: "error", text: error.message });
+    });
 }
 
 function addPays() {
