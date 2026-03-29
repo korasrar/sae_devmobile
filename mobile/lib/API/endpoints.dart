@@ -22,6 +22,16 @@ class api{
     }
   }
 
+  Future<String> getAeroportName(int idAeroport) async {
+    final response = await http.get(Uri.parse('$baseUrl/api/aeroport/$idAeroport'));
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      return data['nom_aeroport'];
+    } else {
+      throw Exception("Failed to fetch aeroport name for id $idAeroport");
+    }
+  }
+
   Future<List<String>> getDestinationsFromCity(String ville) async {
     final response = await http.get(Uri.parse('$baseUrl/api/villes/$ville/destinations'));
     if (response.statusCode == 200) {
