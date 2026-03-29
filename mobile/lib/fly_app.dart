@@ -54,7 +54,7 @@ class flyApp extends StatelessWidget {
               routes: [
                 GoRoute(
                   path: '/settings',
-                  builder: (context, state) => const EcranSettings(),
+                  builder: (context, state) => EcranSettings(),
                 ),
               ],
             ),
