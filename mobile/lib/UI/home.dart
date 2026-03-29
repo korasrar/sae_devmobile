@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:mobile/API/endpoints.dart';
-import 'package:mobile/UI/detail.dart';
 import 'package:mobile/models/vol.dart';
 import 'package:mobile/viewModel/myVolsViewModel.dart';
+import 'package:go_router/go_router.dart';
 
 class home extends StatefulWidget {
   const home({super.key});
@@ -83,7 +82,6 @@ class _homeState extends State<home> {
               );
             },
             suggestionsBuilder: (BuildContext context, SearchController controller) {
-              // Villes statiques pour l'exemple ou à récupérer via une API de villes si disponible
               final List<String> cities = ['Paris', 'Lyon', 'Marseille', 'Toulouse', 'Nice'];
               
               return cities.map((city) => ListTile(
@@ -92,7 +90,7 @@ class _homeState extends State<home> {
                   setState(() {
                     controller.closeView(city);
                   });
-                  _searchDestinations(city, 3); // Par défaut toutes par exemple
+                  _searchDestinations(city, 3);
                 },
               )).toList();
             },
@@ -191,12 +189,7 @@ class _homeState extends State<home> {
           onPressed: () => _showAddDialog(context, vol),
         ),
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (context) => Detail(vol: vol),
-            ),
-          );
+          context.push('/detail', extra: vol);
         },
       ),
     );
@@ -213,7 +206,7 @@ class _homeState extends State<home> {
                   right: -40,
                   top: -40,
                   child: InkResponse(
-                    onTap: () => Navigator.of(context).pop(),
+                    onTap: () => context.pop(),
                     child: const CircleAvatar(
                       backgroundColor: Colors.red,
                       child: Icon(Icons.close),
@@ -228,7 +221,7 @@ class _homeState extends State<home> {
                       onPressed: () {
                         vol.isPro = false;
                         context.read<MyVolsViewModel>().addVol(vol);
-                        Navigator.of(context).pop();
+                        context.pop();
                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Vol ajouté aux favoris')));
                       },
                     ),
@@ -238,7 +231,7 @@ class _homeState extends State<home> {
                       onPressed: () {
                         vol.isPro = true;
                         context.read<MyVolsViewModel>().addVol(vol);
-                        Navigator.of(context).pop();
+                        context.pop();
                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Vol ajouté aux favoris')));
                       },
                     )

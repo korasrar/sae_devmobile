@@ -1,106 +1,141 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/UI/myVols.dart';
 import 'package:mobile/UI/theme.dart';
 import 'package:mobile/UI/home.dart';
 import 'package:mobile/UI/aeroport_map.dart';
+import 'package:mobile/UI/detail.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile/UI/settings.dart';
 import 'package:mobile/services/databaseServices.dart';
-
 import 'package:mobile/viewModel/settingViewModel.dart';
 import 'package:mobile/viewModel/myVolsViewModel.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mobile/models/vol.dart';
 
-class flyApp extends StatelessWidget{
+class flyApp extends StatelessWidget {
   final Database db;
-  const flyApp({super.key, required this.db});
+  late final GoRouter _router;
+
+  flyApp({super.key, required this.db}) {
+    _router = GoRouter(
+      initialLocation: '/',
+      routes: [
+        StatefulShellRoute.indexedStack(
+          builder: (context, state, navigationShell) {
+            return HomePage(navigationShell: navigationShell);
+          },
+          branches: [
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: '/',
+                  builder: (context, state) => const home(),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: '/my-vols',
+                  builder: (context, state) => const myVols(),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: '/map',
+                  builder: (context, state) => const aeroports_map(),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: '/settings',
+                  builder: (context, state) => const EcranSettings(),
+                ),
+              ],
+            ),
+          ],
+        ),
+        GoRoute(
+          path: '/detail',
+          builder: (context, state) {
+            final vol = state.extra as Vol;
+            return Detail(vol: vol);
+          },
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-              create: (_) {
-                SettingViewModel svm = SettingViewModel();
-                return svm;
-              }
-          ),
-          ChangeNotifierProvider(
-            create: (_) {
-              MyVolsViewModel mvvm = MyVolsViewModel(database: databaseServices(db: db));
-              return mvvm;
-          }
-          )
-        ],
-        child: Consumer<SettingViewModel>(
-            builder: (context, SettingViewModel notifier, child) {
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                theme: notifier.isDark ? MyTheme.dark() : MyTheme.light(),
-                title: 'Vols',
-                home: const HomePage(title: 'Vols'),
-
-              );
-            }
+      providers: [
+        ChangeNotifierProvider(create: (_) => SettingViewModel()),
+        ChangeNotifierProvider(
+          create: (_) => MyVolsViewModel(database: databaseServices(db: db)),
         )
+      ],
+      child: Consumer<SettingViewModel>(
+        builder: (context, notifier, child) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            theme: notifier.isDark ? MyTheme.dark() : MyTheme.light(),
+            title: 'Vols',
+            routerConfig: _router,
+          );
+        },
+      ),
     );
   }
 }
 
-class HomePage extends StatefulWidget{
-  final String title;
-  const HomePage({super.key, required this.title});
+class HomePage extends StatelessWidget {
+  final StatefulNavigationShell navigationShell;
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage>{
-  int _seledtedIndex = 0;
-
-  List<Widget> pages = [
-    home(),
-    myVols(),
-    aeroports_map(),
-    EcranSettings()
-  ];
+  const HomePage({super.key, required this.navigationShell});
 
   void _onItemTapped(int index) {
-    setState(() {
-      _seledtedIndex = index;
-    });
+    navigationShell.goBranch(
+      index,
+      initialLocation: index == navigationShell.currentIndex,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text('Vols'),
       ),
-      body: pages[_seledtedIndex],
+      body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         selectedItemColor: Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
         unselectedItemColor: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: Icon(Icons.airplane_ticket),
-              label: "Vols"
+            icon: Icon(Icons.airplane_ticket),
+            label: "Vols",
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: "Mes Vols"
+            icon: Icon(Icons.person),
+            label: "Mes Vols",
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.map),
-              label: "Map"
+            icon: Icon(Icons.map),
+            label: "Map",
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: "Settings"
+            icon: Icon(Icons.settings),
+            label: "Settings",
           ),
         ],
-        currentIndex: _seledtedIndex,
+        currentIndex: navigationShell.currentIndex,
         onTap: _onItemTapped,
       ),
     );
