@@ -19,13 +19,21 @@ class MyVolsViewModel extends ChangeNotifier {
   List<bool> _selectedFilters = [true, true];
   List<bool> get selectedFilters => _selectedFilters;
 
+  String _searchQuery = "";
+  String get searchQuery => _searchQuery;
+
   List<Vol> get filteredVols {
     return _allVols.where((vol) {
-      if (vol.isPro) {
-        return _selectedFilters[1]; // Filtre Pro
-      } else {
-        return _selectedFilters[0]; // Filtre Perso
+      bool matchesType = vol.isPro ? _selectedFilters[1] : _selectedFilters[0];
+      
+      bool matchesSearch = true;
+      if (_searchQuery.isNotEmpty) {
+        // On peut chercher par numéro de vol ou par date (ou d'autres champs si besoin)
+        matchesSearch = vol.num_vol.toString().contains(_searchQuery) || 
+                        vol.date_depart.toLowerCase().contains(_searchQuery.toLowerCase());
       }
+      
+      return matchesType && matchesSearch;
     }).toList();
   }
 
@@ -42,6 +50,11 @@ class MyVolsViewModel extends ChangeNotifier {
 
   void toggleFilter(int index) {
     _selectedFilters[index] = !_selectedFilters[index];
+    notifyListeners();
+  }
+
+  void setSearchQuery(String query) {
+    _searchQuery = query;
     notifyListeners();
   }
 
