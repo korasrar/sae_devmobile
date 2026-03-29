@@ -46,7 +46,7 @@ function saveCompagnie() {
           <!--trouver le nom du pays-->
           <!--https://www.w3schools.com/jsreF/jsref_find.asp-->
           <span class="value">{{
-            pays.find((p) => p.id === compagnie.id_pays)?.nom_pays ||
+            pays.find((p) => p.id_pays === compagnie.id_pays)?.nom_pays ||
             "Non défini"
           }}</span>
         </p>
@@ -69,7 +69,7 @@ function saveCompagnie() {
           Pays:
           <select v-model="editedIdPays" class="form-select">
             <option :value="null">-- Sélectionner un pays --</option>
-            <option v-for="p in pays" :key="p.id" :value="p.id">
+            <option v-for="p in pays" :key="p.id_pays" :value="p.id_pays">
               {{ p.nom_pays }}
             </option>
           </select>

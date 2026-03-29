@@ -73,7 +73,11 @@ def create_new_ville():
 @app.route("/api/villes/<int:id>", methods=["PUT"])
 def update_ville_route(id):
     data = request.json
-    ville = update_ville(id, data["nom_ville"])
+    ville = update_ville(
+        id, 
+        data.get("nom_ville"), 
+        data.get("id_pays")
+    )
     return jsonify(ville.to_json())
 
 
@@ -115,7 +119,11 @@ def create_new_aeroport():
 @app.route("/api/aeroports/<int:id>", methods=["PUT"])
 def update_aeroport_route(id):
     data = request.json
-    aeroport = update_aeroport(id, data["nom_aeroport"])
+    aeroport = update_aeroport(
+        id, 
+        data.get("nom_aeroport"), 
+        data.get("id_ville")
+    )
     return jsonify(aeroport.to_json())
 
 
@@ -157,7 +165,11 @@ def create_new_compagnie():
 @app.route("/api/compagnies/<int:id>", methods=["PUT"])
 def update_compagnie_route(id):
     data = request.json
-    comp = update_compagnie(id, data["nom"])
+    comp = update_compagnie(
+        id, 
+        data.get("nom"), 
+        data.get("id_pays")
+    )
     return jsonify(comp.to_json())
 
 
@@ -201,14 +213,20 @@ def update_vol_route():
 
     vol = update_vol(
         data["num_vol"],
+        data.get("old_id_compagnie", data["id_compagnie"]),
+        data.get("old_date_depart", data["date_depart"]),
         data["id_compagnie"],
         data["date_depart"],
         data["date_arrive"],
+        data.get("id_aeroport_depart"),
+        data.get("id_aeroport_arrive"),
         data["terminal_depart"],
         data["terminal_arrive"]
     )
 
-    return jsonify(vol.to_json())
+    if vol:
+        return jsonify(vol.to_json())
+    return jsonify({"error": "Vol not found"}), 404
 
 
 @app.route("/api/vols", methods=["DELETE"])

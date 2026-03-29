@@ -24,9 +24,10 @@ function fetchVilles() {
 
 function fetchPays() {
   provider.getPays().then((data) => {
+    console.log(data);
     pays.value = data;
   }).catch((error) => {
-    notify({ type: "error", text: error.message });
+    notify({ type: "error", text: error.message});
   });
 }
 
