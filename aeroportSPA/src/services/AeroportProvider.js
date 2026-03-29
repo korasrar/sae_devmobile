@@ -213,14 +213,14 @@ export class AeroportProvider {
     }
   }
 
-  async addVol(idCompagnie, idAeroportDepart, idAeroportArrivee, dateDepart, dateArrivee) {
+  async addVol(idCompagnie, idAeroportDepart, idAeroportArrivee, dateDepart, dateArrivee, terminalDepart, terminalArrive) {
     try {
       await fetch(this.apiEndpoint + 'vols', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ id_compagnie: idCompagnie, id_aeroport_depart: idAeroportDepart, id_aeroport_arrive: idAeroportArrivee, date_depart: dateDepart, date_arrive: dateArrivee })
+        body: JSON.stringify({ id_compagnie: idCompagnie, id_aeroport_depart: idAeroportDepart, id_aeroport_arrive: idAeroportArrivee, date_depart: dateDepart, date_arrive: dateArrivee, terminal_depart: terminalDepart, terminal_arrive: terminalArrive })
       });
       return { success: true };
     } catch (error) {
