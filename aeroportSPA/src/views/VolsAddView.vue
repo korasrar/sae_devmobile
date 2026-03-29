@@ -8,6 +8,7 @@ const { notify } = useNotification();
 const compagnies = ref([]);
 const aeroports = ref([]);
 
+const newNumVol = ref("");
 const newIdCompagnie = ref("");
 const newIdAeroportDepart = ref("");
 const newIdAeroportArrive = ref("");
@@ -38,9 +39,10 @@ function fetchAeroports() {
 }
 
 function addVol() {
-  provider.addVol(newIdCompagnie.value, newIdAeroportDepart.value, newIdAeroportArrive.value, newDateDepart.value, newDateArrive.value, newTerminalDepart.value, newTerminalArrive.value)
+  provider.addVol(newNumVol.value, newIdCompagnie.value, newIdAeroportDepart.value, newIdAeroportArrive.value, newDateDepart.value, newDateArrive.value, newTerminalDepart.value, newTerminalArrive.value)
     .then(() => {
       notify({ type: "success", text: "Vol ajouté avec succès !" });
+      newNumVol.value = "";
       newIdCompagnie.value = "";
       newIdAeroportDepart.value = "";
       newIdAeroportArrive.value = "";
@@ -63,6 +65,10 @@ function goToVols() {
   <div class="add-container">
     <h1>Ajouter un vol</h1>
     <form class="add-form" @submit.prevent="addVol">
+      <div class="form-group">
+        <label class="form-label">Numéro de vol</label>
+        <input type="number" v-model="newNumVol" class="form-input" required />
+      </div>
       <div class="form-group">
         <label class="form-label">Compagnie</label>
         <select v-model="newIdCompagnie" class="form-input" required>

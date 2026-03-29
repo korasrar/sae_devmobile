@@ -46,7 +46,7 @@ function saveAeroport() {
           <!--trouver le nom de la ville cette fois-->
           <!--https://www.w3schools.com/jsreF/jsref_find.asp-->
           <span class="value">{{
-            villes.find((v) => v.id === aeroport.id_ville)?.nom_ville ||
+            villes.find((v) => v.id_ville === aeroport.id_ville)?.nom_ville ||
             "Non définie"
           }}</span>
         </p>
@@ -69,7 +69,7 @@ function saveAeroport() {
           Ville:
           <select v-model="editedIdVille" class="form-select">
             <option :value="null">-- Sélectionner une ville --</option>
-            <option v-for="v in villes" :key="v.id" :value="v.id">
+            <option v-for="v in villes" :key="v.id_ville" :value="v.id_ville">
               {{ v.nom_ville }}
             </option>
           </select>

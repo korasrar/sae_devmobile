@@ -1,4 +1,5 @@
 from .app import db
+from datetime import datetime
 
 
 # =====================
@@ -102,10 +103,13 @@ def get_all_villes():
     return Ville.query.all()
 
 
-def update_ville(id_ville, new_nom):
+def update_ville(id_ville, new_nom, new_id_pays=None):
     ville = Ville.query.get(id_ville)
     if ville:
-        ville.nom_ville = new_nom
+        if new_nom is not None:
+            ville.nom_ville = new_nom
+        if new_id_pays is not None:
+            ville.id_pays = new_id_pays
         db.session.commit()
     return ville
 
@@ -159,10 +163,13 @@ def get_all_aeroports():
     return Aeroport.query.all()
 
 
-def update_aeroport(id_aeroport, new_nom):
+def update_aeroport(id_aeroport, new_nom, new_id_ville=None):
     aeroport = Aeroport.query.get(id_aeroport)
     if aeroport:
-        aeroport.nom_aeroport = new_nom
+        if new_nom is not None:
+            aeroport.nom_aeroport = new_nom
+        if new_id_ville is not None:
+            aeroport.id_ville = new_id_ville
         db.session.commit()
     return aeroport
 
@@ -185,7 +192,7 @@ class Compagnie(db.Model):
     nom = db.Column(db.String(20))
     id_pays = db.Column(db.Integer, db.ForeignKey("PAYS.id_pays"))
 
-    vols = db.relationship("Vol", backref=db.backref("Compagnie", lazy="select"), uselist=True)
+    vols = db.relationship("Vol", backref=db.backref("Compagnie", lazy="select"), uselist=True, cascade="all, delete")
 
     def __init__(self, id_compagnie, nom, id_pays):
         self.id_compagnie = id_compagnie
@@ -219,10 +226,13 @@ def get_all_compagnies():
     return Compagnie.query.all()
 
 
-def update_compagnie(id_compagnie, new_nom):
+def update_compagnie(id_compagnie, new_nom, new_id_pays=None):
     comp = Compagnie.query.get(id_compagnie)
     if comp:
-        comp.nom = new_nom
+        if new_nom is not None:
+            comp.nom = new_nom
+        if new_id_pays is not None:
+            comp.id_pays = new_id_pays
         db.session.commit()
     return comp
 
@@ -284,13 +294,21 @@ class Vol(db.Model):
 
 
 
+def parse_date(date_var):
+    if isinstance(date_var, str):
+        return datetime.strptime(date_var[:10], "%Y-%m-%d").date()
+    return date_var
+
 def create_vol(num_vol, id_compagnie, date_depart, date_arrive,
                id_aeroport_depart, terminal_depart,
                id_aeroport_arrive, terminal_arrive):
 
-    new = Vol(num_vol, id_compagnie, date_depart, date_arrive,
-              id_aeroport_depart, terminal_depart,
-              id_aeroport_arrive, terminal_arrive)
+    date_depart = parse_date(date_depart)
+    date_arrive = parse_date(date_arrive)
+
+    new = Vol(num_vol=num_vol, id_compagnie=id_compagnie, date_depart=date_depart, date_arrive=date_arrive,
+              id_aeroport_depart=id_aeroport_depart, terminal_depart=terminal_depart,
+              id_aeroport_arrive=id_aeroport_arrive, terminal_arrive=terminal_arrive)
 
     db.session.add(new)
     db.session.commit()
@@ -298,6 +316,7 @@ def create_vol(num_vol, id_compagnie, date_depart, date_arrive,
 
 
 def get_vol(num_vol, id_compagnie, date_depart):
+    date_depart = parse_date(date_depart)
     return Vol.query.get((num_vol, id_compagnie, date_depart))
 
 
@@ -305,13 +324,22 @@ def get_all_vols():
     return Vol.query.all()
 
 
-def update_vol(num_vol, id_compagnie, date_depart,
-               new_date_arrive, new_terminal_depart, new_terminal_arrive):
+def update_vol(num_vol, old_id_compagnie, old_date_depart,
+               new_id_compagnie, new_date_depart, new_date_arrive,
+               new_id_aeroport_depart, new_id_aeroport_arrive,
+               new_terminal_depart, new_terminal_arrive):
 
-    vol = Vol.query.get((num_vol, id_compagnie, date_depart))
+    old_date_depart = parse_date(old_date_depart)
+    vol = Vol.query.get((num_vol, old_id_compagnie, old_date_depart))
 
     if vol:
-        vol.date_arrive = new_date_arrive
+        vol.id_compagnie = new_id_compagnie
+        vol.date_depart = parse_date(new_date_depart)
+        vol.date_arrive = parse_date(new_date_arrive)
+        if new_id_aeroport_depart is not None:
+            vol.id_aeroport_depart = new_id_aeroport_depart
+        if new_id_aeroport_arrive is not None:
+            vol.id_aeroport_arrive = new_id_aeroport_arrive
         vol.terminal_depart = new_terminal_depart
         vol.terminal_arrive = new_terminal_arrive
         db.session.commit()
@@ -320,6 +348,7 @@ def update_vol(num_vol, id_compagnie, date_depart,
 
 
 def delete_vol(num_vol, id_compagnie, date_depart):
+    date_depart = parse_date(date_depart)
     vol = Vol.query.get((num_vol, id_compagnie, date_depart))
 
     if vol:

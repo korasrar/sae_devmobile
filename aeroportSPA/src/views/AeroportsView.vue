@@ -48,6 +48,7 @@ function updateAeroport({ aeroport, newNomAeroport, newIdVille }) {
       fetchAeroports();
     })
     .catch((error) => {
+      console.log(newIdVille);
       notify({ type: "error", text: error.message });
     });
 }
