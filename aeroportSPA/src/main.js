@@ -13,6 +13,7 @@ import CompagniesAddView from "./views/CompagniesAddView.vue";
 import VillesAddView from "./views/VillesAddView.vue";
 import PaysAddView from "./views/PaysAddView.vue";
 import VolsView from "./views/VolsView.vue";
+import VolsAddView from "./views/VolsAddView.vue";
 
 const routes = [
   { path: "/", redirect: "/home" },
@@ -22,6 +23,7 @@ const routes = [
   { path: "/compagnies", component: CompagniesView },
   { path: "/aeroports", component: AeroportsView },
   { path: "/vols", component: VolsView },
+  { path: "/vols/add", component: VolsAddView },
   { path: "/aeroports/add", component: AeroportsAddView },
   { path: "/compagnies/add", component: CompagniesAddView },
   { path: "/villes/add", component: VillesAddView },
