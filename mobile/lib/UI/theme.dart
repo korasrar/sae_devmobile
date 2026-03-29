@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyTheme {
-  // 1
   static TextTheme lightTextTheme = TextTheme(
     bodyLarge: GoogleFonts.openSans(
       fontSize: 14.0,
       fontWeight: FontWeight.w700,
       color: Colors.black,
     ),
+    bodyMedium: GoogleFonts.openSans(
+      fontSize: 14.0,
+      color: Colors.black87,
+    ),
     displayLarge: GoogleFonts.openSans(
       fontSize: 32.0,
       fontWeight: FontWeight.bold,
@@ -31,13 +34,16 @@ class MyTheme {
     ),
   );
 
-  // 2
   static TextTheme darkTextTheme = TextTheme(
     bodyLarge: GoogleFonts.openSans(
       fontSize: 14.0,
       fontWeight: FontWeight.w700,
       color: Colors.white,
     ),
+    bodyMedium: GoogleFonts.openSans(
+      fontSize: 14.0,
+      color: Colors.white70,
+    ),
     displayLarge: GoogleFonts.openSans(
       fontSize: 32.0,
       fontWeight: FontWeight.bold,
@@ -60,46 +66,74 @@ class MyTheme {
     ),
   );
 
-  // 3
   static ThemeData light() {
     return ThemeData(
+      useMaterial3: true,
       brightness: Brightness.light,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: Colors.blue,
+        brightness: Brightness.light,
+        primary: Colors.blue[700]!,
+        secondary: Colors.green,
+      ),
       checkboxTheme: CheckboxThemeData(
-        fillColor: MaterialStateColor.resolveWith(
-              (states) {
-            return Colors.black;
-          },
-        ),
+        fillColor: WidgetStateProperty.all(Colors.blue[700]),
       ),
       appBarTheme: const AppBarTheme(
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
       ),
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
         foregroundColor: Colors.white,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blue[700],
       ),
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        selectedItemColor: Colors.green,
+      cardTheme: CardThemeData(
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        color: Colors.white,
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        selectedItemColor: Colors.blue[700],
+        unselectedItemColor: Colors.black54,
+        backgroundColor: Colors.white,
+        type: BottomNavigationBarType.fixed,
       ),
       textTheme: lightTextTheme,
     );
   }
 
-  // 4
   static ThemeData dark() {
     return ThemeData(
+      useMaterial3: true,
       brightness: Brightness.dark,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: Colors.blue,
+        brightness: Brightness.dark,
+        primary: Colors.blue[300]!,
+        secondary: Colors.green[400]!,
+      ),
       appBarTheme: AppBarTheme(
         foregroundColor: Colors.white,
         backgroundColor: Colors.grey[900],
+        elevation: 0,
+        centerTitle: true,
       ),
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.green,
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.blue[300],
       ),
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        selectedItemColor: Colors.green,
+      cardTheme: CardThemeData(
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        color: Colors.grey[850],
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        selectedItemColor: Colors.blue[300],
+        unselectedItemColor: Colors.white60,
+        backgroundColor: Colors.grey[900],
+        type: BottomNavigationBarType.fixed,
       ),
       textTheme: darkTextTheme,
     );
