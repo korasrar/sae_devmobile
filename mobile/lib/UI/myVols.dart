@@ -80,9 +80,6 @@ class _myVolsState extends State<myVols> {
                         ? {1}
                         : {},
             onSelectionChanged: (Set<int> newSelection) {
-              // Implementation might vary based on ViewModel logic
-              // For now, let's keep it simple and trigger the existing toggle logic if possible
-              // or just match the view model's expectations.
               if (newSelection.contains(0) != viewModel.selectedFilters[0]) viewModel.toggleFilter(0);
               if (newSelection.contains(1) != viewModel.selectedFilters[1]) viewModel.toggleFilter(1);
             },

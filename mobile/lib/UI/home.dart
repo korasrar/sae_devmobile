@@ -29,16 +29,16 @@ class _homeState extends State<home> {
     try {
       List<String> results;
       switch (type) {
-        case 0: // Direct
+        case 0:
           results = await myApi.getDestinationsFromCity(city);
           break;
-        case 1: // 1 Escale
+        case 1:
           results = await myApi.getDestinations1Escale(city);
           break;
-        case 2: // 2 Escales
+        case 2:
           results = await myApi.getDestinations2Escales(city);
           break;
-        case 3: // Toutes
+        case 3:
           results = await myApi.getDestinationsRecursive(city);
           break;
         default:

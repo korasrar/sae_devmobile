@@ -15,7 +15,6 @@ class MyVolsViewModel extends ChangeNotifier {
 
   List<Vol> _allVols  = [];
   
-  // Filtres : [Perso, Pro]
   List<bool> _selectedFilters = [true, true];
   List<bool> get selectedFilters => _selectedFilters;
 
@@ -28,8 +27,7 @@ class MyVolsViewModel extends ChangeNotifier {
       
       bool matchesSearch = true;
       if (_searchQuery.isNotEmpty) {
-        // On peut chercher par numéro de vol ou par date (ou d'autres champs si besoin)
-        matchesSearch = vol.num_vol.toString().contains(_searchQuery) || 
+        matchesSearch = vol.num_vol.toString().contains(_searchQuery) ||
                         vol.date_depart.toLowerCase().contains(_searchQuery.toLowerCase());
       }
       
