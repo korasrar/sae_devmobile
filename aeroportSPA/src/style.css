@@ -1,0 +1,488 @@
+:root {
+  /* ── Typographie ── */
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* ── Couleurs (thème sombre par défaut) ── */
+  color-scheme: light dark;
+  --color-primary:       #646cff;
+  --color-primary-hover: #535bf2;
+  --color-primary-dim:   #646cff44;
+
+  --color-bg:      #242424;
+  --color-surface: #1a1a1a;
+
+  --color-text:        rgba(255, 255, 255, 0.87);
+  --color-text-muted:  rgba(255, 255, 255, 0.70);
+  --color-text-subtle: rgba(255, 255, 255, 0.35);
+
+  /* ── Espacements ── */
+  --spacing-xs: 0.75rem;
+  --spacing-sm: 1.5rem;
+  --spacing-md: 2rem;
+
+  /* ── Formes ── */
+  --radius: 8px;
+
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --color-primary-hover: #747bff;
+
+    --color-bg:      #ffffff;
+    --color-surface: #f9f9f9;
+
+    --color-text:        #213547;
+    --color-text-muted:  #213547aa;
+    --color-text-subtle: #21354755;
+  }
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --color-primary-hover: #747bff;
+
+  --color-bg:      #ffffff;
+  --color-surface: #f9f9f9;
+
+  --color-text:        #213547;
+  --color-text-muted:  #213547aa;
+  --color-text-subtle: #21354755;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --color-primary-hover: #535bf2;
+
+  --color-bg:      #242424;
+  --color-surface: #1a1a1a;
+
+  --color-text:        rgba(255, 255, 255, 0.87);
+  --color-text-muted:  rgba(255, 255, 255, 0.70);
+  --color-text-subtle: rgba(255, 255, 255, 0.35);
+}
+
+a {
+  font-weight: 500;
+  color: var(--color-primary);
+  text-decoration: inherit;
+}
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--color-surface);
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: var(--color-primary);
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.card {
+  padding: 2em;
+}
+
+#app {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--spacing-md);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* ── Header ── */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-bottom: 1px solid var(--color-primary-dim);
+  background-color: var(--color-surface);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.app-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-primary);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.app-nav {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex: 1;
+}
+
+.app-nav a {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.app-nav a:hover,
+.app-nav a.router-link-active {
+  color: var(--color-primary);
+}
+
+.app-route {
+  font-size: 0.8rem;
+  color: var(--color-text-subtle);
+  font-family: monospace;
+  white-space: nowrap;
+}
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--color-primary-dim);
+  border-radius: var(--radius);
+  padding: 0.3em 0.55em;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.theme-toggle:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-dim);
+}
+
+/* ── Item Cards (Villes, Pays, etc.) ── */
+.item-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-primary-dim);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin: 1rem 0;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.item-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 2px 8px var(--color-primary-dim);
+}
+
+.item-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.item-info {
+  flex: 1;
+  text-align: left;
+}
+
+.item-name {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  color: var(--color-text);
+}
+
+.item-detail {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-text-muted);
+}
+
+.item-detail .label {
+  font-weight: 500;
+  color: var(--color-text-subtle);
+}
+
+.item-detail .value {
+  color: var(--color-primary);
+}
+
+.item-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* ── Forms ── */
+.item-form {
+  text-align: left;
+}
+
+.form-title {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.3rem;
+  color: var(--color-primary);
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.form-input,
+.form-select {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-primary-dim);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: inherit;
+  transition: border-color 0.25s;
+}
+
+.form-input:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.form-select {
+  cursor: pointer;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+/* ── Buttons ── */
+.btn-edit,
+.btn-save {
+  background-color: var(--color-primary);
+  color: white;
+  border: 1px solid var(--color-primary);
+}
+
+.btn-edit:hover,
+.btn-save:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+.btn-delete {
+  background-color: #dc3545;
+  color: white;
+  border: 1px solid #dc3545;
+}
+
+.btn-delete:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+.btn-cancel {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-primary-dim);
+}
+
+.btn-cancel:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-bg);
+}
+
+/* ── List Containers ── */
+.list-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.list-items {
+  margin-top: 2rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .item-display {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .item-actions,
+  .form-actions {
+    width: 100%;
+  }
+  
+  .item-actions button,
+  .form-actions button {
+    flex: 1;
+  }
+}
+
+/* ── Notifications ── */
+.vue-notification-group {
+  margin: 1rem;
+}
+
+.vue-notification-wrapper {
+  margin-bottom: 0.75rem;
+}
+
+.vue-notification {
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-left: 4px solid;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.vue-notification.success {
+  border-left-color: #28a745;
+  background-color: #d4edda;
+  color: #155724;
+}
+
+[data-theme="dark"] .vue-notification.success {
+  background-color: #1e4620;
+  color: #7dff8e;
+}
+
+.vue-notification.error {
+  border-left-color: #dc3545;
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+[data-theme="dark"] .vue-notification.error {
+  background-color: #4a1e22;
+  color: #ff7b7b;
+}
+
+.vue-notification.warn {
+  border-left-color: #ffc107;
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+[data-theme="dark"] .vue-notification.warn {
+  background-color: #4a3f1e;
+  color: #ffd87d;
+}
+
+.vue-notification.info {
+  border-left-color: #17a2b8;
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+[data-theme="dark"] .vue-notification.info {
+  background-color: #1e3a3f;
+  color: #7ddbff;
+}
+
+.flight-card {
+  width: 100%;
+}
+.flight-route {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+.flight-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.flight-divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 0.5;
+  color: #adb5bd;
+}
+.flight-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+.text-blue {
+  color: #0d6efd;
+}
+.text-green {
+  color: #198754;
+}
+.airport-name {
+  margin: 5px 0;
+  font-size: 1.1em;
+  color: #212529;
+}
+.terminal-info {
+  font-weight: bold;
+  color: #495057;
+}
+.date-info {
+  font-size: 0.9em;
+  color: #6c757d;
+}
+.dotted-line {
+  border-top: 2px dotted #ced4da;
+  width: 100%;
+  margin-top: 5px;
+}
+.flight-path-icon {
+  font-size: 16px;
+}

@@ -1,0 +1,176 @@
+{
+  "pays": [
+    {
+      "id_pays": 3,
+      "nom_pays": "test",
+      "id": "3"
+    },
+    {
+      "id_pays": 4,
+      "nom_pays": "test",
+      "id": "4"
+    },
+    {
+      "id": "5",
+      "id_pays": 5,
+      "nom_pays": "Japon"
+    },
+    {
+      "id": "6",
+      "id_pays": 6,
+      "nom_pays": "Émirats Arabes Unis"
+    },
+    {
+      "id": "5ab6",
+      "nom_pays": "test"
+    }
+  ],
+  "villes": [
+    {
+      "id_ville": "6",
+      "nom_ville": "caca",
+      "id_pays": "5",
+      "id": "6"
+    },
+    {
+      "id": "a332",
+      "nom_ville": "Orléans",
+      "id_pays": "6"
+    }
+  ],
+  "aeroports": [
+    {
+      "id_aeroport": "2",
+      "nom_aeroport": "Paris Orlycaca",
+      "id_ville": "6",
+      "id": "2"
+    },
+    {
+      "id_aeroport": "3",
+      "nom_aeroport": "JFK Internationalda",
+      "id_ville": 2,
+      "id": "3"
+    },
+    {
+      "id_aeroport": "4",
+      "nom_aeroport": "Los Angeles Intj",
+      "id_ville": "6",
+      "id": "4"
+    },
+    {
+      "id": "5",
+      "id_aeroport": 5,
+      "nom_aeroport": "Londres Heathrow",
+      "id_ville": 4
+    },
+    {
+      "id": "6",
+      "id_aeroport": 6,
+      "nom_aeroport": "Londres Gatwick",
+      "id_ville": 4
+    },
+    {
+      "id": "7",
+      "id_aeroport": 7,
+      "nom_aeroport": "Berlin-Brandebourg",
+      "id_ville": 5
+    },
+    {
+      "id": "8",
+      "id_aeroport": 8,
+      "nom_aeroport": "Tokyo Haneda",
+      "id_ville": 6
+    },
+    {
+      "id": "9",
+      "id_aeroport": 9,
+      "nom_aeroport": "Tokyo Narita",
+      "id_ville": 6
+    },
+    {
+      "id": "10",
+      "id_aeroport": 10,
+      "nom_aeroport": "Aéroport Int de Dubaï",
+      "id_ville": 7
+    },
+    {
+      "id": "5058",
+      "nom_aeroport": "test",
+      "id_ville": "6"
+    },
+    {
+      "id": "a3d4",
+      "nom_aeroport": "test",
+      "id_ville": "6"
+    },
+    {
+      "id": "813b",
+      "nom_aeroport": "test",
+      "id_ville": "6"
+    }
+  ],
+  "compagnies": [
+    {
+      "id": "ebe4",
+      "nom": "test",
+      "id_pays": "5"
+    }
+  ],
+  "vols": [
+    {
+      "num_vol": 4010,
+      "id_compagnie": "ebe4",
+      "id_aeroport_depart": 8,
+      "id_aeroport_arrive": 4,
+      "date_depart": "2026-03-24T22:00:00Z",
+      "date_arrive": "2026-03-25T05:00:00Z",
+      "terminal_depart": 2,
+      "terminal_arrive": 7,
+      "id": "5"
+    },
+    {
+      "id": "6",
+      "num_vol": 1102,
+      "id_compagnie": 1,
+      "date_depart": "2026-03-25T06:45:00Z",
+      "date_arrive": "2026-03-25T08:00:00Z",
+      "id_aeroport_depart": 2,
+      "terminal_depart": 1,
+      "id_aeroport_arrive": 6,
+      "terminal_arrive": 2
+    },
+    {
+      "id": "7",
+      "num_vol": 5225,
+      "id_compagnie": 4,
+      "date_depart": "2026-03-26T13:00:00Z",
+      "date_arrive": "2026-03-26T21:45:00Z",
+      "id_aeroport_depart": 7,
+      "terminal_depart": 1,
+      "id_aeroport_arrive": 9,
+      "terminal_arrive": 1
+    },
+    {
+      "id": "8",
+      "num_vol": 6005,
+      "id_compagnie": 6,
+      "date_depart": "2026-03-27T09:15:00Z",
+      "date_arrive": "2026-03-27T23:30:00Z",
+      "id_aeroport_depart": 10,
+      "terminal_depart": 3,
+      "id_aeroport_arrive": 8,
+      "terminal_arrive": 3
+    },
+    {
+      "id": "f3e4",
+      "id_compagnie": "ebe4",
+      "id_aeroport_depart": "4",
+      "id_aeroport_arrive": "3",
+      "date_depart": "2026-03-04T13:48",
+      "date_arrive": "2026-04-22T13:48",
+      "terminal_depart": "1",
+      "terminal_arrive": "2"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
