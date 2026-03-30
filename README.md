@@ -59,3 +59,5 @@ flutter run -d chrome
 
 ## Suivi de projet
 Le document de suivi de projet se trouve ici : https://github.com/users/korasrar/projects/2/views/4
+## Vidéo de présentation
+voici le lien de la vidéo : https://www.youtube.com/watch?v=p49y_O-C6x0
