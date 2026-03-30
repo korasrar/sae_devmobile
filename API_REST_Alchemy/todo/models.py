@@ -1,5 +1,7 @@
 from .app import db
 from datetime import datetime
+from sqlalchemy.orm import aliased
+from sqlalchemy import text
 
 
 # =====================
@@ -354,3 +356,143 @@ def delete_vol(num_vol, id_compagnie, date_depart):
     if vol:
         db.session.delete(vol)
         db.session.commit()
+
+
+
+#===================requetes=======================
+
+def get_destinations_from_city(ville_depart):
+
+    A1 = aliased(Aeroport)
+    A2 = aliased(Aeroport)
+
+    V1 = aliased(Ville)   # ville arrivée
+    V2 = aliased(Ville)   # ville départ
+
+    results = (
+        db.session.query(V1.nom_ville)
+        .select_from(Vol)
+        .join(A1, Vol.id_aeroport_arrive == A1.id_aeroport)
+        .join(V1, A1.id_ville == V1.id_ville)
+        .join(A2, Vol.id_aeroport_depart == A2.id_aeroport)
+        .join(V2, A2.id_ville == V2.id_ville)
+        .filter(V2.nom_ville == ville_depart)
+        .distinct()
+        .all()
+    )
+
+    return [r[0] for r in results]
+
+
+def get_destinations_with_one_stop(ville_depart):
+
+    query = text("""
+    SELECT DISTINCT v_dest.nom_ville
+    FROM VOL v1
+    JOIN VOL v2 
+        ON v1.id_aeroport_arrive = v2.id_aeroport_depart 
+       AND v1.date_arrive < v2.date_depart
+    JOIN AEROPORT a_dep 
+        ON v1.id_aeroport_depart = a_dep.id_aeroport
+    JOIN VILLE v_dep 
+        ON a_dep.id_ville = v_dep.id_ville
+    JOIN AEROPORT a_dest 
+        ON v2.id_aeroport_arrive = a_dest.id_aeroport
+    JOIN VILLE v_dest 
+        ON a_dest.id_ville = v_dest.id_ville
+    WHERE v_dep.nom_ville = :ville
+    """)
+
+    result = db.session.execute(query, {"ville": ville_depart})
+
+    return [row[0] for row in result]
+
+
+def get_destinations_with_two_stops(ville_depart):
+
+    query = text("""
+    SELECT DISTINCT v_dest.nom_ville
+    FROM VOL v1
+    JOIN VOL v2 
+        ON v1.id_aeroport_arrive = v2.id_aeroport_depart 
+       AND v1.date_arrive < v2.date_depart
+    JOIN VOL v3 
+        ON v2.id_aeroport_arrive = v3.id_aeroport_depart 
+       AND v2.date_arrive < v3.date_depart
+    JOIN AEROPORT a_dep 
+        ON v1.id_aeroport_depart = a_dep.id_aeroport
+    JOIN VILLE v_dep 
+        ON a_dep.id_ville = v_dep.id_ville
+    JOIN AEROPORT a_dest 
+        ON v3.id_aeroport_arrive = a_dest.id_aeroport
+    JOIN VILLE v_dest 
+        ON a_dest.id_ville = v_dest.id_ville
+    WHERE v_dep.nom_ville = :ville
+    """)
+
+    result = db.session.execute(query, {"ville": ville_depart})
+
+    return [row[0] for row in result]
+
+
+def get_accessible_cities(ville_depart):
+
+    query = text("""
+    WITH RECURSIVE ACCESSIBLE(
+        id_aeroport_arrivee,
+        nom_ville_arrivee,
+        date_arrive,
+        nb_correspondances,
+        path
+    ) AS (
+
+        -- Vols directs
+        SELECT 
+            vol.id_aeroport_arrive,
+            v_arr.nom_ville,
+            vol.date_arrive,
+            0,
+            CAST(vol.id_aeroport_arrive AS TEXT)
+        FROM VOL vol
+        JOIN AEROPORT a_dep ON vol.id_aeroport_depart = a_dep.id_aeroport
+        JOIN VILLE v_dep ON a_dep.id_ville = v_dep.id_ville
+        JOIN AEROPORT a_arr ON vol.id_aeroport_arrive = a_arr.id_aeroport
+        JOIN VILLE v_arr ON a_arr.id_ville = v_arr.id_ville
+        WHERE v_dep.nom_ville = :ville
+
+        UNION ALL
+
+        -- Correspondances
+        SELECT 
+            vol.id_aeroport_arrive,
+            v_arr.nom_ville,
+            vol.date_arrive,
+            acc.nb_correspondances + 1,
+            path || ',' || vol.id_aeroport_arrive
+        FROM ACCESSIBLE acc
+        JOIN VOL vol 
+            ON vol.id_aeroport_depart = acc.id_aeroport_arrivee
+           AND vol.date_depart > acc.date_arrive
+        JOIN AEROPORT a_arr ON vol.id_aeroport_arrive = a_arr.id_aeroport
+        JOIN VILLE v_arr ON a_arr.id_ville = v_arr.id_ville
+        WHERE instr(path, vol.id_aeroport_arrive) = 0
+    )
+
+    SELECT 
+        nom_ville_arrivee AS ville_accessible,
+        MIN(nb_correspondances) AS nb_correspondances
+    FROM ACCESSIBLE
+    WHERE nom_ville_arrivee <> :ville
+    GROUP BY nom_ville_arrivee
+    ORDER BY ville_accessible
+    """)
+
+    result = db.session.execute(query, {"ville": ville_depart})
+
+    return [
+        {
+            "ville": row[0],
+            "nb_correspondances": row[1]
+        }
+        for row in result
+    ]
