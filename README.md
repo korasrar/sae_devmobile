@@ -11,9 +11,9 @@ Pour la lancer :
 ```bash
 cd API_REST_Alchemy
 python3 -m venv venv
-source venv/bin/activate  # Sur Windows: venv\Scripts\activate
+source venv/bin/activate
 pip install -r requirements.txt
-flask --app todo run      # ou python -m flask run
+flask run
 ```
 
 ### 2. Client Web Vue.js (`aeroportSPA`)
@@ -37,7 +37,7 @@ Pour la lancer :
 ```bash
 cd mobile
 flutter pub get
-flutter run
+flutter run -d chrome
 ```
 
 ## Dépendances Fonctionnelle
