@@ -5,10 +5,10 @@ import 'package:flutter/services.dart';
 
 
 class api{
-  final String baseUrl = 'http://localhost:3000';
+  final String baseUrl = 'http://localhost:5000';
 
   Future<List<Vol>> getVols() async{
-    final response = await http.get(Uri.parse('$baseUrl/vols'));
+    final response = await http.get(Uri.parse('$baseUrl/api/vols'));
 
     if(response.statusCode == 200){
       final List<dynamic> json = jsonDecode(response.body);
@@ -23,7 +23,7 @@ class api{
   }
 
   Future<String> getAeroportName(int idAeroport) async {
-    final response = await http.get(Uri.parse('$baseUrl/api/aeroport/$idAeroport'));
+    final response = await http.get(Uri.parse('$baseUrl/api/aeroports/$idAeroport'));
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = jsonDecode(response.body);
       return data['nom_aeroport'];
@@ -66,7 +66,7 @@ class api{
     final response = await http.get(Uri.parse('$baseUrl/api/destinations/$ville/toutes'));
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
-      return List<String>.from(data);
+      return data.map((item) => item['ville'] as String).toList();
     } else {
       throw Exception("Failed to fetch all recursive destinations from $ville");
     }
