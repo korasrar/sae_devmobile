@@ -16,8 +16,7 @@ import VolsView from "./views/VolsView.vue";
 import VolsAddView from "./views/VolsAddView.vue";
 
 const routes = [
-  { path: "/", redirect: "/home" },
-  { path: "/home", component: HomeView },
+  { path: "/", redirect: "/vols" },
   { path: "/villes", component: VillesView },
   { path: "/pays", component: PaysView },
   { path: "/compagnies", component: CompagniesView },
@@ -28,7 +27,7 @@ const routes = [
   { path: "/compagnies/add", component: CompagniesAddView },
   { path: "/villes/add", component: VillesAddView },
   { path: "/pays/add", component: PaysAddView },
-  { path: "/:pathMatch(.*)*", redirect: "/home" },
+  { path: "/:pathMatch(.*)*", redirect: "/vols" },
 ];
 
 export const router = createRouter({
