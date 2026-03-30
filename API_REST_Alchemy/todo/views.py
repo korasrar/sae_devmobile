@@ -194,21 +194,11 @@ def get_vols():
 def create_new_vol():
     data = request.json
 
-
-    # Conversion des dates ISO en objets date
-    from datetime import date
-    date_depart = data["date_depart"]
-    date_arrive = data["date_arrive"]
-    if isinstance(date_depart, str):
-        date_depart = date.fromisoformat(date_depart)
-    if isinstance(date_arrive, str):
-        date_arrive = date.fromisoformat(date_arrive)
-
     vol = create_vol(
         data["num_vol"],
         data["id_compagnie"],
-        date_depart,
-        date_arrive,
+        data["date_depart"],
+        data["date_arrive"],
         data["id_aeroport_depart"],
         data["terminal_depart"],
         data["id_aeroport_arrive"],
@@ -221,15 +211,6 @@ def create_new_vol():
 @app.route("/api/vols", methods=["PUT"])
 def update_vol_route():
     data = request.json
-
-
-    from datetime import date
-    date_depart = data["date_depart"]
-    date_arrive = data["date_arrive"]
-    if isinstance(date_depart, str):
-        date_depart = date.fromisoformat(date_depart)
-    if isinstance(date_arrive, str):
-        date_arrive = date.fromisoformat(date_arrive)
 
     vol = update_vol(
         data["num_vol"],
@@ -253,16 +234,10 @@ def update_vol_route():
 def delete_vol_route():
     data = request.json
 
-
-    from datetime import date
-    date_depart = data["date_depart"]
-    if isinstance(date_depart, str):
-        date_depart = date.fromisoformat(date_depart)
-
     delete_vol(
         data["num_vol"],
         data["id_compagnie"],
-        date_depart
+        data["date_depart"]
     )
 
     return jsonify({"message": "Vol deleted"})
