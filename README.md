@@ -37,6 +37,7 @@ Pour la lancer :
 ```bash
 cd mobile
 flutter pub get
+dart run sqflite_common_ffi_web:setup
 flutter run -d chrome
 ```
 
