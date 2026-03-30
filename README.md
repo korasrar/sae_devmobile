@@ -56,3 +56,6 @@ flutter run -d chrome
 ## MCD
 
 ![MCD](images/mcd_modele_relationnel.png)
+
+## Suivi de projet
+Le document de suivi de projet se trouve ici : https://github.com/users/korasrar/projects/2/views/4
