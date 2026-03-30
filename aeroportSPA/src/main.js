@@ -3,7 +3,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import Notifications from "@kyvg/vue3-notification";
 import "./style.css";
 import App from "./App.vue";
-import HomeView from "./views/HomeView.vue";
 import VillesView from "./views/VillesView.vue";
 import PaysView from "./views/PaysView.vue";
 import CompagniesView from "./views/CompagniesView.vue";
