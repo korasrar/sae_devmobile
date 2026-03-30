@@ -1,0 +1,17 @@
+connexion oracle:
+ - rlwrap sqlplus <nom>@ora12
+
+Changez votre mot de passe:
+ - alter user <login> identified by <nouveauMotPasse>;
+
+Pour augmenter la taille des lignes : 
+ - set LINESIZE 500
+
+Pour diminuer la taille d’une colonne : 
+ - column cname format A15
+
+Pour voir l’ensemble de tables : 
+ - select * from tab;
+
+Pour voir le schéma d’une table : 
+ - describe nomTable ;

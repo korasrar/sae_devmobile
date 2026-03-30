@@ -1,0 +1,37 @@
+import { createApp } from "vue";
+import { createRouter, createWebHistory } from "vue-router";
+import Notifications from "@kyvg/vue3-notification";
+import "./style.css";
+import App from "./App.vue";
+import VillesView from "./views/VillesView.vue";
+import PaysView from "./views/PaysView.vue";
+import CompagniesView from "./views/CompagniesView.vue";
+import AeroportsView from "./views/AeroportsView.vue";
+import AeroportsAddView from "./views/AeroportsAddView.vue";
+import CompagniesAddView from "./views/CompagniesAddView.vue";
+import VillesAddView from "./views/VillesAddView.vue";
+import PaysAddView from "./views/PaysAddView.vue";
+import VolsView from "./views/VolsView.vue";
+import VolsAddView from "./views/VolsAddView.vue";
+
+const routes = [
+  { path: "/", redirect: "/vols" },
+  { path: "/villes", component: VillesView },
+  { path: "/pays", component: PaysView },
+  { path: "/compagnies", component: CompagniesView },
+  { path: "/aeroports", component: AeroportsView },
+  { path: "/vols", component: VolsView },
+  { path: "/vols/add", component: VolsAddView },
+  { path: "/aeroports/add", component: AeroportsAddView },
+  { path: "/compagnies/add", component: CompagniesAddView },
+  { path: "/villes/add", component: VillesAddView },
+  { path: "/pays/add", component: PaysAddView },
+  { path: "/:pathMatch(.*)*", redirect: "/vols" },
+];
+
+export const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
+
+createApp(App).use(router).use(Notifications).mount("#app");
