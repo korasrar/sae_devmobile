@@ -168,16 +168,73 @@ connexion(VD, VA, DD1, HD1, DA2, HA2) :-
     VD != VI,
     VI != VA.
 
+% - REQUETES POUR CONNEXIONS AVEC NOMBRE IMPAIR DE CORRESPONDANCES -----------
+
+% 1 correspondance (impair): VD -> VI -> VA
+connexionImpaire(VD, VA, DD1, HD1, DA2, HA2) :-
+    vol(_, _, VD, _, _, _, DD1, HD1, VI, _, _, _, DA1, HA1),
+    vol(_, _, VI, _, _, _, DD2, HD2, VA, _, _, _, DA2, HA2),
+    plusPetit(DA1-HA1, DD2-HD2),
+    VD != VA,
+    VD != VI,
+    VI != VA.
+
+% 3 correspondances (impair): VD -> VI1 -> VI2 -> VI3 -> VA
+connexionImpaire(VD, VA, DD1, HD1, DA4, HA4) :-
+    vol(_, _, VD, _, _, _, DD1, HD1, VI1, _, _, _, DA1, HA1),
+    vol(_, _, VI1, _, _, _, DD2, HD2, VI2, _, _, _, DA2, HA2),
+    vol(_, _, VI2, _, _, _, DD3, HD3, VI3, _, _, _, DA3, HA3),
+    vol(_, _, VI3, _, _, _, DD4, HD4, VA, _, _, _, DA4, HA4),
+    plusPetit(DA1-HA1, DD2-HD2),
+    plusPetit(DA2-HA2, DD3-HD3),
+    plusPetit(DA3-HA3, DD4-HD4),
+    VD != VA,
+    VD != VI1,
+    VD != VI2,
+    VD != VI3,
+    VI1 != VA,
+    VI1 != VI2,
+    VI1 != VI3,
+    VI2 != VA,
+    VI2 != VI3,
+    VI3 != VA.
+
+% 5 correspondances (impair): VD -> VI1 -> VI2 -> VI3 -> VI4 -> VI5 -> VA
+connexionImpaire(VD, VA, DD1, HD1, DA6, HA6) :-
+    vol(_, _, VD, _, _, _, DD1, HD1, VI1, _, _, _, DA1, HA1),
+    vol(_, _, VI1, _, _, _, DD2, HD2, VI2, _, _, _, DA2, HA2),
+    vol(_, _, VI2, _, _, _, DD3, HD3, VI3, _, _, _, DA3, HA3),
+    vol(_, _, VI3, _, _, _, DD4, HD4, VI4, _, _, _, DA4, HA4),
+    vol(_, _, VI4, _, _, _, DD5, HD5, VI5, _, _, _, DA5, HA5),
+    vol(_, _, VI5, _, _, _, DD6, HD6, VA, _, _, _, DA6, HA6),
+    plusPetit(DA1-HA1, DD2-HD2),
+    plusPetit(DA2-HA2, DD3-HD3),
+    plusPetit(DA3-HA3, DD4-HD4),
+    plusPetit(DA4-HA4, DD5-HD5),
+    plusPetit(DA5-HA5, DD6-HD6),
+    VD != VA,
+    VD != VI1, VD != VI2, VD != VI3, VD != VI4, VD != VI5,
+    VI1 != VA, VI1 != VI2, VI1 != VI3, VI1 != VI4, VI1 != VI5,
+    VI2 != VA, VI2 != VI3, VI2 != VI4, VI2 != VI5,
+    VI3 != VA, VI3 != VI4, VI3 != VI5,
+    VI4 != VA, VI4 != VI5,
+    VI5 != VA.
+
 % - REQUETES UTILES TEST ------------------------------------------------------
 
 % Q1: Lister toutes les connexions possibles depuis Paris
 % connexion(paris, VilleArrivee, DateDepart, HeureDepart, DateArrivee, HeureArrivee)?
 
+% Q2: Lister toutes les connexions avec nombre impair de correspondances depuis Paris
+% connexionImpaire(paris, VilleArrivee, DateDepart, HeureDepart, DateArrivee, HeureArrivee)?
+
+% Q3: Lister TOUTES les connexions avec nombre impair de correspondances
+% connexionImpaire(VilleDepart, VilleArrivee, DateDepart, HeureDepart, DateArrivee, HeureArrivee)?
+
 % - RESULTATS ATTENDUS -------------------------------------------
 
-% Depuis Paris:
-%   - New York (vol direct)
-%   - Nice (vol direct)
-%   - Toulouse (via Lyon si correspondance existe)
+% Depuis Paris avec connexions impaires:
+%   - Toulouse (1 correspondance via Lyon: Paris->Lyon->Toulouse)
+%   - Tokyo (1 correspondance via Londres: Paris->Londres->Tokyo)
 
-% Format résultat: connexion(villeDepart, villeArrivee, dateDepart, heureDepart, dateArrivee, heureArrivee)
+% Format résultat: connexionImpaire(villeDepart, villeArrivee, dateDepart, heureDepart, dateArrivee, heureArrivee)
