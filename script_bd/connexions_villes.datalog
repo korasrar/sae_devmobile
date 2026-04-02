@@ -1,0 +1,183 @@
+% - Base de données VOL ---------------------------------------------------------
+% vol(Compagnie, Numero, VilleDepart, PaysDepart, AeroportDepart, TerminalDepart, 
+%     DateDepart, HeureDepart, VilleArrivee, PaysArrivee, AeroportArrivee, 
+%     TerminalArrivee, DateArrivee, HeureArrivee)
+
+vol(airfrance, af123, paris, france, cdg, 2e, 2026-04-01, 10-00, newyork, usa, jfk, 4, 2026-04-01, 13-00).
+vol(lufthansa, lh456, francfort, allemagne, fra, 1, 2026-04-01, 14-30, paris, france, cdg, 2f, 2026-04-01, 15-45).
+vol(airfrance, af789, lyon, france, lys, 1, 2026-04-02, 08-00, toulouse, france, tls, a, 2026-04-02, 09-00).
+vol(britishairways, ba011, londres, royaume-uni, lhr, 5, 2026-04-02, 12-00, tokyo, japon, hnd, 3, 2026-04-03, 07-30).
+vol(ryanair, fr902, madrid, espagne, mad, 4, 2026-04-03, 18-00, dublin, irlande, dub, 1, 2026-04-03, 20-15).
+vol(airfrance, af321, paris, france, ory, 3, 2026-04-04, 09-00, nice, france, nce, 2, 2026-04-04, 10-30).
+vol(airfrance, af456, paris, france, cdg, 2e, 2026-04-02, 07-00, lyon, france, lys, 1, 2026-04-02, 08-00).
+vol(britishairways, ba234, paris, france, cdg, 2a, 2026-04-02, 10-00, londres, royaume-uni, lhr, 5, 2026-04-02, 11-00).
+
+% plusPetit(Moment1, Moment2)
+% Format: 2026-04-01-10-00
+% Comparaisons généré par l'ia ( trop long a faire a la main )
+% si besoin de plus de comparaison, les rajouter.
+
+% Comparaisons intra-jour 2026-04-01
+plusPetit(2026-04-01-10-00, 2026-04-01-13-00).
+plusPetit(2026-04-01-10-00, 2026-04-01-14-30).
+plusPetit(2026-04-01-10-00, 2026-04-01-15-45).
+plusPetit(2026-04-01-13-00, 2026-04-01-14-30).
+plusPetit(2026-04-01-13-00, 2026-04-01-15-45).
+plusPetit(2026-04-01-14-30, 2026-04-01-15-45).
+
+% Comparaisons intra-jour 2026-04-02
+plusPetit(2026-04-02-07-00, 2026-04-02-08-00).
+plusPetit(2026-04-02-07-00, 2026-04-02-09-00).
+plusPetit(2026-04-02-07-00, 2026-04-02-10-00).
+plusPetit(2026-04-02-07-00, 2026-04-02-11-00).
+plusPetit(2026-04-02-07-00, 2026-04-02-12-00).
+plusPetit(2026-04-02-08-00, 2026-04-02-09-00).
+plusPetit(2026-04-02-08-00, 2026-04-02-10-00).
+plusPetit(2026-04-02-08-00, 2026-04-02-11-00).
+plusPetit(2026-04-02-08-00, 2026-04-02-12-00).
+plusPetit(2026-04-02-09-00, 2026-04-02-10-00).
+plusPetit(2026-04-02-09-00, 2026-04-02-11-00).
+plusPetit(2026-04-02-09-00, 2026-04-02-12-00).
+plusPetit(2026-04-02-10-00, 2026-04-02-11-00).
+plusPetit(2026-04-02-10-00, 2026-04-02-12-00).
+plusPetit(2026-04-02-11-00, 2026-04-02-12-00).
+
+% Comparaisons intra-jour 2026-04-03
+plusPetit(2026-04-03-07-30, 2026-04-03-18-00).
+plusPetit(2026-04-03-07-30, 2026-04-03-20-15).
+plusPetit(2026-04-03-18-00, 2026-04-03-20-15).
+
+% Comparaisons intra-jour 2026-04-04
+plusPetit(2026-04-04-09-00, 2026-04-04-10-30).
+
+% Comparaisons inter-jours (01 -> 02, 03, 04)
+plusPetit(2026-04-01-10-00, 2026-04-02-07-00).
+plusPetit(2026-04-01-10-00, 2026-04-02-08-00).
+plusPetit(2026-04-01-10-00, 2026-04-02-09-00).
+plusPetit(2026-04-01-10-00, 2026-04-02-10-00).
+plusPetit(2026-04-01-10-00, 2026-04-02-11-00).
+plusPetit(2026-04-01-10-00, 2026-04-02-12-00).
+plusPetit(2026-04-01-10-00, 2026-04-03-07-30).
+plusPetit(2026-04-01-10-00, 2026-04-03-18-00).
+plusPetit(2026-04-01-10-00, 2026-04-03-20-15).
+plusPetit(2026-04-01-10-00, 2026-04-04-09-00).
+plusPetit(2026-04-01-10-00, 2026-04-04-10-30).
+
+plusPetit(2026-04-01-13-00, 2026-04-02-07-00).
+plusPetit(2026-04-01-13-00, 2026-04-02-08-00).
+plusPetit(2026-04-01-13-00, 2026-04-02-09-00).
+plusPetit(2026-04-01-13-00, 2026-04-02-10-00).
+plusPetit(2026-04-01-13-00, 2026-04-02-11-00).
+plusPetit(2026-04-01-13-00, 2026-04-02-12-00).
+plusPetit(2026-04-01-13-00, 2026-04-03-07-30).
+plusPetit(2026-04-01-13-00, 2026-04-03-18-00).
+plusPetit(2026-04-01-13-00, 2026-04-03-20-15).
+plusPetit(2026-04-01-13-00, 2026-04-04-09-00).
+plusPetit(2026-04-01-13-00, 2026-04-04-10-30).
+
+plusPetit(2026-04-01-14-30, 2026-04-02-07-00).
+plusPetit(2026-04-01-14-30, 2026-04-02-08-00).
+plusPetit(2026-04-01-14-30, 2026-04-02-09-00).
+plusPetit(2026-04-01-14-30, 2026-04-02-10-00).
+plusPetit(2026-04-01-14-30, 2026-04-02-11-00).
+plusPetit(2026-04-01-14-30, 2026-04-02-12-00).
+plusPetit(2026-04-01-14-30, 2026-04-03-07-30).
+plusPetit(2026-04-01-14-30, 2026-04-03-18-00).
+plusPetit(2026-04-01-14-30, 2026-04-03-20-15).
+plusPetit(2026-04-01-14-30, 2026-04-04-09-00).
+plusPetit(2026-04-01-14-30, 2026-04-04-10-30).
+
+plusPetit(2026-04-01-15-45, 2026-04-02-07-00).
+plusPetit(2026-04-01-15-45, 2026-04-02-08-00).
+plusPetit(2026-04-01-15-45, 2026-04-02-09-00).
+plusPetit(2026-04-01-15-45, 2026-04-02-10-00).
+plusPetit(2026-04-01-15-45, 2026-04-02-11-00).
+plusPetit(2026-04-01-15-45, 2026-04-02-12-00).
+plusPetit(2026-04-01-15-45, 2026-04-03-07-30).
+plusPetit(2026-04-01-15-45, 2026-04-03-18-00).
+plusPetit(2026-04-01-15-45, 2026-04-03-20-15).
+plusPetit(2026-04-01-15-45, 2026-04-04-09-00).
+plusPetit(2026-04-01-15-45, 2026-04-04-10-30).
+
+% Comparaisons inter-jours (02 -> 03, 04)
+plusPetit(2026-04-02-07-00, 2026-04-03-07-30).
+plusPetit(2026-04-02-07-00, 2026-04-03-18-00).
+plusPetit(2026-04-02-07-00, 2026-04-03-20-15).
+plusPetit(2026-04-02-07-00, 2026-04-04-09-00).
+plusPetit(2026-04-02-07-00, 2026-04-04-10-30).
+
+plusPetit(2026-04-02-08-00, 2026-04-03-07-30).
+plusPetit(2026-04-02-08-00, 2026-04-03-18-00).
+plusPetit(2026-04-02-08-00, 2026-04-03-20-15).
+plusPetit(2026-04-02-08-00, 2026-04-04-09-00).
+plusPetit(2026-04-02-08-00, 2026-04-04-10-30).
+
+plusPetit(2026-04-02-09-00, 2026-04-03-07-30).
+plusPetit(2026-04-02-09-00, 2026-04-03-18-00).
+plusPetit(2026-04-02-09-00, 2026-04-03-20-15).
+plusPetit(2026-04-02-09-00, 2026-04-04-09-00).
+plusPetit(2026-04-02-09-00, 2026-04-04-10-30).
+
+plusPetit(2026-04-02-10-00, 2026-04-03-07-30).
+plusPetit(2026-04-02-10-00, 2026-04-03-18-00).
+plusPetit(2026-04-02-10-00, 2026-04-03-20-15).
+plusPetit(2026-04-02-10-00, 2026-04-04-09-00).
+plusPetit(2026-04-02-10-00, 2026-04-04-10-30).
+
+plusPetit(2026-04-02-11-00, 2026-04-03-07-30).
+plusPetit(2026-04-02-11-00, 2026-04-03-18-00).
+plusPetit(2026-04-02-11-00, 2026-04-03-20-15).
+plusPetit(2026-04-02-11-00, 2026-04-04-09-00).
+plusPetit(2026-04-02-11-00, 2026-04-04-10-30).
+
+plusPetit(2026-04-02-12-00, 2026-04-03-07-30).
+plusPetit(2026-04-02-12-00, 2026-04-03-18-00).
+plusPetit(2026-04-02-12-00, 2026-04-03-20-15).
+plusPetit(2026-04-02-12-00, 2026-04-04-09-00).
+plusPetit(2026-04-02-12-00, 2026-04-04-10-30).
+
+% Comparaisons inter-jours (03 -> 04)
+plusPetit(2026-04-03-07-30, 2026-04-04-09-00).
+plusPetit(2026-04-03-07-30, 2026-04-04-10-30).
+plusPetit(2026-04-03-18-00, 2026-04-04-09-00).
+plusPetit(2026-04-03-18-00, 2026-04-04-10-30).
+plusPetit(2026-04-03-20-15, 2026-04-04-09-00).
+plusPetit(2026-04-03-20-15, 2026-04-04-10-30).
+
+% - Requetes datalog -------------------------------------------------------
+
+% Vol direct: connexion directe entre deux villes
+connexion(VD, VA, DD, HD, DA, HA) :- 
+    vol(_, _, VD, _, _, _, DD, HD, VA, _, _, _, DA, HA).
+
+% Une correspondance: vol1 arrive à VI, puis vol2 part de VI vers VA
+% L'heure d'arrivée du vol1 doit être avant l'heure de départ du vol2
+connexion(VD, VA, DD1, HD1, DA2, HA2) :-
+    vol(_, _, VD, _, _, _, DD1, HD1, VI, _, _, _, DA1, HA1),
+    vol(_, _, VI, _, _, _, DD2, HD2, VA, _, _, _, DA2, HA2),
+    plusPetit(DA1-HA1, DD2-HD2),
+    VD != VA.
+
+% Plusieurs correspondances: utilise une connexion existante comme première partie
+% puis ajoute un vol supplémentaire
+connexion(VD, VA, DD1, HD1, DA2, HA2) :-
+    connexion(VD, VI, DD1, HD1, DAinter, HAinter),
+    vol(_, _, VI, _, _, _, DD2, HD2, VA, _, _, _, DA2, HA2),
+    plusPetit(DAinter-HAinter, DD2-HD2),
+    VD != VA,
+    VD != VI,
+    VI != VA.
+
+% - REQUETES UTILES TEST ------------------------------------------------------
+
+% Q1: Lister toutes les connexions possibles depuis Paris
+% connexion(paris, VilleArrivee, DateDepart, HeureDepart, DateArrivee, HeureArrivee)?
+
+% - RESULTATS ATTENDUS -------------------------------------------
+
+% Depuis Paris:
+%   - New York (vol direct)
+%   - Nice (vol direct)
+%   - Toulouse (via Lyon si correspondance existe)
+
+% Format résultat: connexion(villeDepart, villeArrivee, dateDepart, heureDepart, dateArrivee, heureArrivee)
